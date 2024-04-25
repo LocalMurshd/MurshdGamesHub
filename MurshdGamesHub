@@ -1,0 +1,2678 @@
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+local Window = OrionLib:MakeWindow({Name = "Murshd Games Hub", HidePremium = false, IntroText = "loud Murshd Hub", SaveConfig = true, ConfigFolder = "Murshd Games Saves"})
+
+OrionLib:MakeNotification({
+	Name = "Hey Bro!,Thanks for using Murshd Games Hub",
+	Content = "Please Subscribe To Murshd Games for more scripts!!",
+	Image = "rbxassetid://17264172243",
+	Time = 5
+})
+
+
+-------------window settings end---------------
+
+
+-------------Credits start---------------
+
+local CreditsTab = Window:MakeTab({
+	Name = "Credits",
+	Icon = "rbxassetid://17262969500",
+	PremiumOnly = false
+})
+
+local Section = CreditsTab:AddSection({
+	Name = "Best man ever!"
+})
+
+CreditsTab:AddParagraph("The owner of the Hub","Murshd games , hello and thanks for using murshd games hub,Please subscribe to murshd games channel for more scripts and games!")
+
+-------------main end---------------
+
+
+-------------main start---------------
+
+local MainTab = Window:MakeTab({
+	Name = "Main",
+	Icon = "rbxassetid://17262969500",
+	PremiumOnly = false
+})
+
+local Section = MainTab:AddSection({
+	Name = "Usefull scripts"
+})
+
+
+MainTab:AddButton({
+	Name = "Small server Joiner",
+	Description = "joins smallest server",
+	Callback = function()
+		local Http = game:GetService("HttpService")
+		local TPS = game:GetService("TeleportService")
+		local Api = "https://games.roblox.com/v1/games/"
+		local _place = game.PlaceId
+		local _servers = Api .. _place .. "/servers/Public?sortOrder=Asc&limit=100"
+		function ListServers(cursor)
+			local Raw = game:HttpGet(_servers .. ((cursor and "&cursor=" .. cursor) or ""))
+			return Http:JSONDecode(Raw)
+		end
+		local Server, Next;
+		repeat
+			local Servers = ListServers(Next)
+			Server = Servers.data[1]
+			Next = Servers.nextPageCursor
+		until Server
+		TPS:TeleportToPlaceInstance(_place, Server.id, game:GetService("Players").LocalPlayer)
+	end
+})
+MainTab:AddButton({
+	Name = "Join lowest ping server",
+	Description = "method 1",
+	Callback = function()
+		local Lowest = "ping" -- set to "playing" to find the lowest player server
+
+local HTTPService = game:GetService("HttpService")
+
+local success, servers = pcall(function()
+   return HTTPService:JSONDecode(game:HttpGet(
+       "https://games.roblox.com/v1/games/" .. tostring(game.PlaceId) .. "/servers/Public?limit=100"
+   )).data
+end)
+
+if not success then return end
+
+local server = servers[1]
+
+for i,svr in pairs(servers) do
+   if svr[Lowest] < server[Lowest] then
+       server = svr
+   end
+end
+
+game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, server.id)
+
+	end
+})
+MainTab:AddButton({
+	Name = "join lowest ping server",
+	Description = "method 2",
+	Callback = function()
+		local HTTPService = game:GetService("HttpService")
+local TeleportService = game:GetService("TeleportService")
+local StatsService = game:GetService("Stats")
+
+local function fetchServersData(placeId, limit)
+    local url = string.format("https://games.roblox.com/v1/games/%d/servers/Public?limit=%d", placeId, limit)
+    local success, response = pcall(function()
+        return HTTPService:JSONDecode(game:HttpGet(url))
+    end)
+
+    if success and response and response.data then
+        return response.data
+    end
+
+    return nil
+end
+
+local placeId = game.PlaceId
+local serverLimit = 100
+local servers = fetchServersData(placeId, serverLimit)
+
+if not servers then
+    return
+end
+
+local lowestPingServer = servers[1]
+
+for _, server in pairs(servers) do
+    if server["ping"] < lowestPingServer["ping"] and server.maxPlayers > server.playing then
+        lowestPingServer = server
+    end
+end
+
+local commonLoadTime = 5
+task.wait(commonLoadTime)
+
+local pingThreshold = 100
+local serverStats = StatsService.Network.ServerStatsItem
+local dataPing = serverStats["Data Ping"]:GetValueString()
+local pingValue = tonumber(dataPing:match("(%d+)"))
+
+if pingValue >= pingThreshold then
+    TeleportService:TeleportToPlaceInstance(placeId, lowestPingServer.id)
+else
+       -- Good ping
+end
+	end
+})
+
+
+MainTab:AddButton({
+	Name = "Eclipse hub/Sniper to join",
+	Description = "Join Person",
+	Callback = function()
+		getgenv().mainKey = "nil"
+		local a, b, c, d, e = loadstring, request or http_request or (http and http.request) or (syn and syn.request), assert, tostring, "https://api.eclipsehub.xyz/auth"
+		c(a and b, "Executor not Supported")
+		a(b({
+			Url = e .. "\?\107e\121\61" .. d(mainKey),
+			Headers = {
+				["User-Agent"] = "Eclipse"
+			}
+		}).Body)()
+	end
+})
+
+MainTab:AddButton({
+	Name = "Netless V2",
+	Description = "need to do every time u reset",
+	Callback = function()
+		for i, v in next, game:GetService("Players").LocalPlayer.Character:GetDescendants() do
+			if v:IsA("BasePart") and v.Name ~= "HumanoidRootPart" then
+				game:GetService("RunService").Heartbeat:connect(function()
+					v.Velocity = Vector3.new(0, 35, 0)
+					wait(0.5)
+				end)
+			end
+		end
+		game:GetService("StarterGui"):SetCore("SendNotification", {
+			Name = "Notification";
+			Text = "Netless activated";
+			Icon = "rbxthumb://type=Asset&id=5107182114&w=150&h=150"
+		})
+		Duration = 16;
+	end
+})
+-------------main end---------------
+
+
+-------------mobile start---------------
+
+local MobileTab = Window:MakeTab({
+	Name = "Mobile",
+	Icon = "rbxassetid://17262969500",
+	PremiumOnly = false
+})
+
+local Section = MobileTab:AddSection({
+	Name = "mobile helper"
+})
+
+
+
+
+MobileTab:AddButton({
+	Name = "set shift lock for mobile",
+	Callback = function()
+loadstring(game: HttpGet('https://pastebin.com/raw/792svEcC'))()
+end
+})
+
+MobileTab:AddButton({
+	Name = "KeyBoard Script For Mobile",
+	Callback = function()
+        loadstring(game: HttpGet('https://pastebin.com/raw/YtdxEz0q'))()
+end
+})
+
+-------------mobile end---------------
+
+-------------hub start---------------
+
+local Hubstab = Window:MakeTab({
+	Name = "Hubs",
+	Icon = "rbxassetid://17262969500",
+	PremiumOnly = false
+})
+
+local Section = Hubstab:AddSection({
+	Name = "more hubs"
+})
+
+
+Hubstab:AddButton({
+    Name = "Sky Hub",
+    Description = "Made by Sky/dsgdfs",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/yofriendfromschool1/Sky-Hub/main/SkyHub.txt"))()
+    end
+})
+
+
+Hubstab:AddButton({
+	Name = "FE Universal Hub",
+	Description = "idefk",
+	Callback = function()
+		loadstring(game:HttpGet('https://raw.githubusercontent.com/Dvrknvss/UniversalFEScriptHub/main/Script'))()
+	end
+})
+
+Hubstab:AddButton({
+	Name = "FE Space Hub",
+	Description = "for boomboxes",
+	Callback = function()
+       loadstring(game:HttpGet('https://raw.githubusercontent.com/yofriendfromschool1/Sky-Hub-Backup/main/FE/SpaceHub.lua'))()
+	end
+})
+
+
+-------------hub end---------------
+
+-------------GENESIS start---------------
+
+local GENESIS = Window:MakeTab({
+	Name = "GENESIS",
+	Icon = "rbxassetid://17262969500",
+	PremiumOnly = false
+})
+Tab:AddParagraph("Warning","You need hats for these scripts btw")
+
+Tab:AddParagraph("Warning","Game Supported?")
+
+Tab:AddParagraph("Warning","Do you have correct hats?")
+
+GENESIS:AddButton({
+	Name = "Genesis Game",
+	Description = "Free hats in game for the scripts required to run sum scripts also can get hats for the scripts here",
+	Callback = function()
+		game:GetService("TeleportService"):Teleport(14133411956,game:GetService("Players").LocalPlayer)
+	end
+})
+GENESIS:AddButton({
+	Name = "Genesis Discord",
+	Description = "stay updated on scripts",
+	Callback = function()
+			setclipboard("https://discord.com/invite/aEZpBEHgMT")
+			Fluent:Notify({
+				Name = "Copied Discord invite link",
+				Content = "",
+				SubContent = "", -- Optional
+				Duration = 5 -- Set to nil to make the notification not disappear
+			})
+	end
+})
+GENESIS:AddButton({
+	Name = "FE Sadist Genocider",
+	Description = "need hats btw join Genesis game if you do not have hats for this script.",
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/GenesisFE/Genesis/main/Obfuscations/Sadist%20Genocider"))()
+		if IsOnMobile and not game:GetService("CoreGui"):FindFirstChild("Keyboard gui WarriorRoberr Version") then
+			Fluent:Notify({
+				Name = "Loaded Keyboard Script",
+				Content = "Reason: Because Your on mobile so more support.",
+				SubContent = "",
+				Duration = 15
+			})
+			loadstring(game:HttpGet("https://raw.githubusercontent.com/advxzivhsjjdhxhsidifvsh/mobkeyboard/main/main.txt", true))()
+		end
+	end
+})
+GENESIS:AddButton({
+	Name = "FE Good Cop Bad Cop",
+	Description = "need hats btw join Genesis game if you do not have hats for this script.",
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/GenesisFE/Genesis/main/Obfuscations/Good%20Cop%20Bad%20Cop"))()
+		if IsOnMobile and not game:GetService("CoreGui"):FindFirstChild("Keyboard gui WarriorRoberr Version") then
+			Fluent:Notify({
+				Name = "Loaded Keyboard Script",
+				Content = "Reason: Because Your on mobile so more support.",
+				SubContent = "",
+				Duration = 15
+			})
+			loadstring(game:HttpGet("https://raw.githubusercontent.com/advxzivhsjjdhxhsidifvsh/mobkeyboard/main/main.txt", true))()
+		end
+	end
+})
+GENESIS:AddButton({
+	Name = "FE Dearsister",
+	Description = "need hats btw join Genesis game if you do not have hats for this script.",
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/GenesisFE/Genesis/main/Obfuscations/Dearsister"))()
+		if IsOnMobile and not game:GetService("CoreGui"):FindFirstChild("Keyboard gui WarriorRoberr Version") then
+			Fluent:Notify({
+				Name = "Loaded Keyboard Script",
+				Content = "Reason: Because Your on mobile so more support.",
+				SubContent = "",
+				Duration = 15
+			})
+			loadstring(game:HttpGet("https://raw.githubusercontent.com/advxzivhsjjdhxhsidifvsh/mobkeyboard/main/main.txt", true))()
+		end
+	end
+})
+GENESIS:AddButton({
+	Name = "FE Neko",
+	Description = "need hats btw join Genesis game if you do not have hats for this script.",
+	Callback = function()
+		DisableFlingHealthBar = false
+
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/GenesisFE/Genesis/main/Obfuscations/Neko"))()
+		Fluent:Notify({
+			Name = "Controls",
+			Content = ([[Script Moves: (USE A KEYBOARD SCRIPT IF MOVE REQUIRES A KEYBOARD KEY)
+			- Click: Punch Kick Combo
+			- F: Equip knives
+			- Click (Knives Equipped): Knife Slash Combo
+			- R: Lay Down & Kick Feet
+			- T: Taunt]]),
+			SubContent = "", -- Optional
+			Duration = 15 -- Set to nil to make the notification not disappear
+		})
+		if IsOnMobile and not game:GetService("CoreGui"):FindFirstChild("Keyboard gui WarriorRoberr Version") then
+			Fluent:Notify({
+				Name = "Loaded Keyboard Script",
+				Content = "Reason: Because Your on mobile so more support.",
+				SubContent = "",
+				Duration = 15
+			})
+			loadstring(game:HttpGet("https://raw.githubusercontent.com/advxzivhsjjdhxhsidifvsh/mobkeyboard/main/main.txt", true))()
+		end
+		
+	end
+})
+GENESIS:AddButton({
+	Name = "FE Goner",
+	Description = "need hats btw join Genesis game if you do not have hats for this script.",
+	Callback = function()
+		DisableFlingHealthBar = false
+
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/GenesisFE/Genesis/main/Obfuscations/Goner"))()
+		Fluent:Notify({
+			Name = "Controls",
+			Content = ([[Script Moves: (USE A KEYBOARD SCRIPT IF MOVE REQUIRES A KEYBOARD KEY)
+			- Click: Slash
+			- Q: Ink Underground]]),
+			SubContent = "", -- Optional
+			Duration = 15 -- Set to nil to make the notification not disappear
+		})
+		if IsOnMobile and not game:GetService("CoreGui"):FindFirstChild("Keyboard gui WarriorRoberr Version") then
+			Fluent:Notify({
+				Name = "Loaded Keyboard Script",
+				Content = "Reason: Because Your on mobile so more support.",
+				SubContent = "",
+				Duration = 15
+			})
+			loadstring(game:HttpGet("https://raw.githubusercontent.com/advxzivhsjjdhxhsidifvsh/mobkeyboard/main/main.txt", true))()
+		end
+	end
+})
+GENESIS:AddButton({
+	Name = "FE Linked Sword",
+	Description = "need hats btw join Genesis game if you do not have hats for this script.",
+	Callback = function()
+		DisableFlingHealthBar = false
+
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/GenesisFE/Genesis/main/Obfuscations/Linked%20Sword"))()
+		Fluent:Notify({
+			Name = "Controls",
+			Content = ([[Script Moves: (USE A KEYBOARD SCRIPT IF MOVE REQUIRES A KEYBOARD KEY)
+			- Click: Sword Slash Combo
+			- Z: Baller Ball
+			- X: Rocket Launcher
+			- C: Bomb]]),
+			SubContent = "", -- Optional
+			Duration = 15 -- Set to nil to make the notification not disappear
+		})
+		if IsOnMobile and not game:GetService("CoreGui"):FindFirstChild("Keyboard gui WarriorRoberr Version") then
+			Fluent:Notify({
+				Name = "Loaded Keyboard Script",
+				Content = "Reason: Because Your on mobile so more support.",
+				SubContent = "",
+				Duration = 15
+			})
+			loadstring(game:HttpGet("https://raw.githubusercontent.com/advxzivhsjjdhxhsidifvsh/mobkeyboard/main/main.txt", true))()
+		end
+	end
+})
+GENESIS:AddButton({
+	Name = "FE Star Glitcher",
+	Description = "need hats btw join Genesis game if you do not have hats for this script.",
+	Callback = function()
+		-- SET THE VARIABLE BELOW TO TRUE TO DISABLE ALL EFFECTS, COULD HELP WITH PERFORMANCE ISSUES
+		if IsOnMobile then
+			DisableFX = true
+		else
+			DisableFX = false
+		end
+
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/GenesisFE/Genesis/main/Obfuscations/Star%20Glitcher"))()
+		Fluent:Notify({
+			Name = "Controls",
+			Content = ([[Script Moves: (USE A KEYBOARD SCRIPT IF MOVE REQUIRES A KEYBOARD KEY)
+			- Click: Impale Combo
+			- Modes: The script has a ton of modes, I recommend watching the video on our channel for the full move list]]),
+			SubContent = "", -- Optional
+			Duration = 15 -- Set to nil to make the notification not disappear
+		})
+		if IsOnMobile and not game:GetService("CoreGui"):FindFirstChild("Keyboard gui WarriorRoberr Version") then
+			Fluent:Notify({
+				Name = "Loaded Keyboard Script",
+				Content = "Reason: Because Your on mobile so more support.",
+				SubContent = "",
+				Duration = 15
+			})
+			loadstring(game:HttpGet("https://raw.githubusercontent.com/advxzivhsjjdhxhsidifvsh/mobkeyboard/main/main.txt", true))()
+		end
+	end
+})
+GENESIS:AddButton({
+	Name = "FE Gale Fighter",
+	Description = "need hats btw join Genesis game if you do not have hats for this script.",
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/GenesisFE/Genesis/main/Obfuscations/Gale%20Fighter"))()
+		Fluent:Notify({
+			Name = "Controls",
+			Content = ([[Script Moves: (USE A KEYBOARD SCRIPT IF MOVE REQUIRES A KEYBOARD KEY)
+			- Click: Punch/Kick Combo
+			- R: Kick Combo
+			- F: Hyper Kick Combo
+			- T: Taunt]]),
+			SubContent = "", -- Optional
+			Duration = 15 -- Set to nil to make the notification not disappear
+		})
+		if IsOnMobile and not game:GetService("CoreGui"):FindFirstChild("Keyboard gui WarriorRoberr Version") then
+			Fluent:Notify({
+				Name = "Loaded Keyboard Script",
+				Content = "Reason: Because Your on mobile so more support.",
+				SubContent = "",
+				Duration = 15
+			})
+			loadstring(game:HttpGet("https://raw.githubusercontent.com/advxzivhsjjdhxhsidifvsh/mobkeyboard/main/main.txt", true))()
+		end
+	end
+})
+GENESIS:AddButton({
+	Name = "FE Motorcycle",
+	Description = "need hats btw join Genesis game if you do not have hats for this script.",
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/GenesisFE/Genesis/main/Obfuscations/Motorcycle"))()
+		Fluent:Notify({
+			Name = "Controls",
+			Content = ([[Script Moves: (USE A KEYBOARD SCRIPT IF MOVE REQUIRES A KEYBOARD KEY)
+			- Click: Shoot
+			- Z: Boost]]),
+			SubContent = "", -- Optional
+			Duration = 15 -- Set to nil to make the notification not disappear
+		})
+		if IsOnMobile and not game:GetService("CoreGui"):FindFirstChild("Keyboard gui WarriorRoberr Version") then
+			Fluent:Notify({
+				Name = "Loaded Keyboard Script",
+				Content = "Reason: Because Your on mobile so more support.",
+				SubContent = "",
+				Duration = 15
+			})
+			loadstring(game:HttpGet("https://raw.githubusercontent.com/advxzivhsjjdhxhsidifvsh/mobkeyboard/main/main.txt", true))()
+		end
+	end
+})
+GENESIS:AddButton({
+	Name = "FE Ban Hammer",
+	Description = "need hats btw join Genesis game if you do not have hats for this script.",
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/GenesisFE/Genesis/main/Obfuscations/Ban%20Hammer"))()
+		Fluent:Notify({
+			Name = "Controls",
+			Content = ([[Script Moves: (USE A KEYBOARD SCRIPT IF MOVE REQUIRES A KEYBOARD KEY)
+			- Click: Ban
+			- E: Ban 2
+			- R: Ban 3]]),
+			SubContent = "", -- Optional
+			Duration = 15 -- Set to nil to make the notification not disappear
+		})
+		if IsOnMobile and not game:GetService("CoreGui"):FindFirstChild("Keyboard gui WarriorRoberr Version") then
+			Fluent:Notify({
+				Name = "Loaded Keyboard Script",
+				Content = "Reason: Because Your on mobile so more support.",
+				SubContent = "",
+				Duration = 15
+			})
+			loadstring(game:HttpGet("https://raw.githubusercontent.com/advxzivhsjjdhxhsidifvsh/mobkeyboard/main/main.txt", true))()
+		end
+		
+	end
+})
+GENESIS:AddButton({
+	Name = "FE AK47",
+	Description = "need hats btw join Genesis game if you do not have hats for this script.",
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/GenesisFE/Genesis/main/Obfuscations/AK-47"))()
+		Fluent:Notify({
+			Name = "Controls",
+			Content = ([[Script Moves:
+			- Click: Shoot]]),
+			SubContent = "", -- Optional
+			Duration = 15 -- Set to nil to make the notification not disappear
+		})
+		if IsOnMobile and not game:GetService("CoreGui"):FindFirstChild("Keyboard gui WarriorRoberr Version") then
+			Fluent:Notify({
+				Name = "Loaded Keyboard Script",
+				Content = "Reason: Because Your on mobile so more support.",
+				SubContent = "",
+				Duration = 15
+			})
+			loadstring(game:HttpGet("https://raw.githubusercontent.com/advxzivhsjjdhxhsidifvsh/mobkeyboard/main/main.txt", true))()
+		end
+	end
+})
+GENESIS:AddButton({
+	Name = "FE Neptunian V",
+	Description = "need hats btw join Genesis game if you do not have hats for this script.",
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/GenesisFE/Genesis/main/Obfuscations/Neptunian%20V"))()
+		Fluent:Notify({
+			Name = "Controls",
+			Content = ([[Script Moves: (USE A KEYBOARD SCRIPT IF MOVE REQUIRES A KEYBOARD KEY)
+			- F: Equip
+			- R: Jump
+			*MUST BE EQUIPPED*
+			- Click: Slash
+			- Z: Charge dash
+			- X: Big Diamond Sword Projectile
+			- C: Spin sword strike]]),
+			SubContent = "", -- Optional
+			Duration = 15 -- Set to nil to make the notification not disappear
+		})
+		if IsOnMobile and not game:GetService("CoreGui"):FindFirstChild("Keyboard gui WarriorRoberr Version") then
+			Fluent:Notify({
+				Name = "Loaded Keyboard Script",
+				Content = "Reason: Because Your on mobile so more support.",
+				SubContent = "",
+				Duration = 15
+			})
+			loadstring(game:HttpGet("https://raw.githubusercontent.com/advxzivhsjjdhxhsidifvsh/mobkeyboard/main/main.txt", true))()
+		end
+		
+	end
+})
+GENESIS:AddButton({
+	Name = "FE Karambit",
+	Description = "need hats btw join Genesis game if you do not have hats for this script.",
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/GenesisFE/Genesis/main/Obfuscations/Karambit"))()
+		if IsOnMobile and not game:GetService("CoreGui"):FindFirstChild("Keyboard gui WarriorRoberr Version") then
+			Fluent:Notify({
+				Name = "Loaded Keyboard Script",
+				Content = "Reason: Because Your on mobile so more support.",
+				SubContent = "",
+				Duration = 15
+			})
+			loadstring(game:HttpGet("https://raw.githubusercontent.com/advxzivhsjjdhxhsidifvsh/mobkeyboard/main/main.txt", true))()
+		end
+	end
+})
+GENESIS:AddButton({
+	Name = "FE Krystal Dance",
+	Description = "need hats btw join Genesis game if you do not have hats for this script.",
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/GenesisFE/Genesis/main/Obfuscations/Krystal%20Dance"))()
+		Fluent:Notify({
+			Name = "Controls",
+			Content = ([[Script Moves: (USE A KEYBOARD SCRIPT IF MOVE REQUIRES A KEYBOARD KEY)
+			- Q: The Swoosher
+			- E: The nutty
+			- R: Spin me right round!
+			- T: Plum juice dance
+			- Y: Moonwalk
+			- U: Slav dance
+			- P: Barrel roll
+			- F: The Jerky
+			- G: The Shuffle
+			- H: The Spongebob
+			- J: Here comes the money!
+			- K: Runnin' in the 90's]]),
+			SubContent = "", -- Optional
+			Duration = 15 -- Set to nil to make the notification not disappear
+		})
+		if IsOnMobile and not game:GetService("CoreGui"):FindFirstChild("Keyboard gui WarriorRoberr Version") then
+			Fluent:Notify({
+				Name = "Loaded Keyboard Script",
+				Content = "Reason: Because Your on mobile so more support.",
+				SubContent = "",
+				Duration = 15
+			})
+			loadstring(game:HttpGet("https://raw.githubusercontent.com/advxzivhsjjdhxhsidifvsh/mobkeyboard/main/main.txt", true))()
+		end
+	end
+})
+GENESIS:AddButton({
+	Name = "FE Sniper",
+	Description = "need hats btw join Genesis game if you do not have hats for this script.",
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/GenesisFE/Genesis/main/Obfuscations/Sniper"))()
+		Fluent:Notify({
+			Name = "Controls",
+			Content = ([[Script Moves: (USE A KEYBOARD SCRIPT IF MOVE REQUIRES A KEYBOARD KEY)
+			- Z: Shoot
+			- X: Jump Forward Shoot
+			- C: Jump Backwards Shoot
+			- V: Spam Shoot
+			- B: Mortar Shoot
+			- J: Dash]]),
+			SubContent = "", -- Optional
+			Duration = 15 -- Set to nil to make the notification not disappear
+		})
+		if IsOnMobile and not game:GetService("CoreGui"):FindFirstChild("Keyboard gui WarriorRoberr Version") then
+			Fluent:Notify({
+				Name = "Loaded Keyboard Script",
+				Content = "Reason: Because Your on mobile so more support.",
+				SubContent = "",
+				Duration = 15
+			})
+			loadstring(game:HttpGet("https://raw.githubusercontent.com/advxzivhsjjdhxhsidifvsh/mobkeyboard/main/main.txt", true))()
+		end
+		
+	end
+})
+GENESIS:AddButton({
+	Name = "FE Banisher",
+	Description = "need hats btw join Genesis game if you do not have hats for this script.",
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/GenesisFE/Genesis/main/Obfuscations/Banisher"))()
+		if IsOnMobile and not game:GetService("CoreGui"):FindFirstChild("Keyboard gui WarriorRoberr Version") then
+			Fluent:Notify({
+				Name = "Loaded Keyboard Script",
+				Content = "Reason: Because Your on mobile so more support.",
+				SubContent = "",
+				Duration = 15
+			})
+			loadstring(game:HttpGet("https://raw.githubusercontent.com/advxzivhsjjdhxhsidifvsh/mobkeyboard/main/main.txt", true))()
+		end
+	end
+})
+GENESIS:AddButton({
+	Name = "FE Lightning Cannon",
+	Description = "need hats btw join Genesis game if you do not have hats for this script.",
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/GenesisFE/Genesis/main/Obfuscations/Lightning%20Cannon"))()
+		if IsOnMobile and not game:GetService("CoreGui"):FindFirstChild("Keyboard gui WarriorRoberr Version") then
+			Fluent:Notify({
+				Name = "Loaded Keyboard Script",
+				Content = "Reason: Because Your on mobile so more support.",
+				SubContent = "",
+				Duration = 15
+			})
+			loadstring(game:HttpGet("https://raw.githubusercontent.com/advxzivhsjjdhxhsidifvsh/mobkeyboard/main/main.txt", true))()
+		end
+	end
+})
+GENESIS:AddButton({
+	Name = "FE Pistol",
+	Description = "need hats btw join Genesis game if you do not have hats for this script.",
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/GenesisFE/Genesis/main/Obfuscations/Pistol"))()
+		if IsOnMobile and not game:GetService("CoreGui"):FindFirstChild("Keyboard gui WarriorRoberr Version") then
+			Fluent:Notify({
+				Name = "Loaded Keyboard Script",
+				Content = "Reason: Because Your on mobile so more support.",
+				SubContent = "",
+				Duration = 15
+			})
+			loadstring(game:HttpGet("https://raw.githubusercontent.com/advxzivhsjjdhxhsidifvsh/mobkeyboard/main/main.txt", true))()
+		end
+	end
+})
+GENESIS:AddButton({
+	Name = "FE Studio Dummy",
+	Description = "need hats btw join Genesis game if you do not have hats for this script.",
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/GenesisFE/Genesis/main/Obfuscations/Studio%20Dummy"))()
+		if IsOnMobile and not game:GetService("CoreGui"):FindFirstChild("Keyboard gui WarriorRoberr Version") then
+			Fluent:Notify({
+				Name = "Loaded Keyboard Script",
+				Content = "Reason: Because Your on mobile so more support.",
+				SubContent = "",
+				Duration = 15
+			})
+			loadstring(game:HttpGet("https://raw.githubusercontent.com/advxzivhsjjdhxhsidifvsh/mobkeyboard/main/main.txt", true))()
+		end
+	end
+})
+
+
+-------------GENESIS end---------------
+
+-------------fe start---------------
+
+
+local GUIS = Window:MakeTab({
+	Name = "fe scripts ",
+	Icon = "rbxassetid://17262969500",
+	PremiumOnly = false
+})
+
+local Section = GUIS:AddSection({
+	Name = "fe scripts "
+})
+
+GUIS:AddButton({
+	Name = "FE equip all tools",
+	Description = "equips all tools in backpack",
+	Callback = function()
+        for i,v in pairs(game:GetService("Players").LocalPlayer:WaitForChild("Backpack"):GetChildren()) do
+            if v:IsA("Tool") then
+                v.Parent = game:GetService("Players").LocalPlayer.Character
+            end
+        end
+	end
+})
+
+
+GUIS:AddButton({
+	Name = "FE Inivisible Car",
+	Description = "makes it look like you are driving an invisible car R6",
+	Callback = function()
+        --made by ferretboii#2398/catboy19jan2038
+        -- Gui to Lua
+        -- Version: 3.2
+
+        -- Instances:
+
+        local Template = Instance.new("ScreenGui")
+        local Frame = Instance.new("Frame")
+        local Frame_2 = Instance.new("Frame")
+        local RUN = Instance.new("TextButton")
+        local ARROW = Instance.new("TextButton")
+        local NAME = Instance.new("TextButton")
+
+        --Properties:
+
+        Template.Name = "Template"
+        Template.Parent = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui")
+        Template.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+        Frame.Parent = Template
+        Frame.BackgroundColor3 = Color3.fromRGB(79, 79, 79)
+        Frame.BorderSizePixel = 0
+        Frame.Position = UDim2.new(0.0362374708, 0, 0.482208639, 0)
+        Frame.Size = UDim2.new(0, 174, 0, 28)
+
+        Frame_2.Parent = Frame
+        Frame_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+        Frame_2.BorderSizePixel = 0
+        Frame_2.Position = UDim2.new(0, 0, 1, 0)
+        Frame_2.Size = UDim2.new(0, 174, 0, 72)
+
+        RUN.Name = "RUN"
+        RUN.Parent = Frame_2
+        RUN.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+        RUN.BorderColor3 = Color3.fromRGB(255, 255, 0)
+        RUN.BorderSizePixel = 0
+        RUN.Position = UDim2.new(0.157653749, 0, 0.222330347, 0)
+        RUN.Size = UDim2.new(0, 118, 0, 38)
+        RUN.Font = Enum.Font.PatrickHand
+        RUN.Text = "Car OFF"
+        RUN.TextColor3 = Color3.fromRGB(0, 0, 0)
+        RUN.TextSize = 50.000
+
+        ARROW.Name = "ARROW"
+        ARROW.Parent = Frame
+        ARROW.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+        ARROW.BackgroundTransparency = 1.000
+        ARROW.BorderSizePixel = 0
+        ARROW.Position = UDim2.new(0.834664106, 0, 0, 0)
+        ARROW.Size = UDim2.new(0, 28, 0, 28)
+        ARROW.Font = Enum.Font.PatrickHand
+        ARROW.Text = "X"
+        ARROW.TextColor3 = Color3.fromRGB(0, 0, 0)
+        ARROW.TextSize = 30.000
+
+        NAME.Name = "NAME"
+        NAME.Parent = Frame
+        NAME.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+        NAME.BackgroundTransparency = 1.000
+        NAME.BorderSizePixel = 0
+        NAME.Position = UDim2.new(0.369146883, 0, 0, 0)
+        NAME.Size = UDim2.new(0, 28, 0, 28)
+        NAME.Font = Enum.Font.PatrickHand
+        NAME.Text = "Car Script"
+        NAME.TextColor3 = Color3.fromRGB(0, 0, 0)
+        NAME.TextSize = 23.000
+
+        -- Scripts:
+
+        local function ICEIM_fake_script() -- RUN.LocalScript 
+        local script = Instance.new('LocalScript', RUN)
+
+        local Toggled = false
+        local Anim, track, hum
+        
+        Anim = Instance.new("Animation")
+        Anim.AnimationId = "rbxassetid://179224234"
+        
+        script.Parent.MouseButton1Click:Connect(function()
+        if not track or hum ~= game:GetService("Players").LocalPlayer.Character.Humanoid  then 
+        pcall(game.Destroy, track)
+        track = game:GetService("Players").LocalPlayer.Character.Humanoid:LoadAnimation(Anim)
+        hum = game:GetService("Players").LocalPlayer.Character.Humanoid
+        end
+        
+        if Toggled == false then
+        game:GetService("Players").LocalPlayer.Character.Humanoid.WalkSpeed = 69
+        script.Parent.Text = "Car ON"
+        track:Play(.1, 1, 1)
+        Toggled = true
+        elseif Toggled == true then
+        track:Stop()
+        script.Parent.Text = "Car OFF"
+        game:GetService("Players").LocalPlayer.Character.Humanoid.WalkSpeed = 16
+        Toggled = false
+        end
+        end)
+        end
+        coroutine.wrap(ICEIM_fake_script)()
+        local function XOEAVM_fake_script() -- RUN.RGB_Script 
+        local script = Instance.new('LocalScript', RUN)
+
+        -- Made By Auradomix --
+        -- Visit My Channel On YT and Twitch = @Auradomix
+        
+        -- PUT "RGB_GUI" ON STARTERGUI
+        -- PUT THIS ON ANY FRAME OR BUTTON OR BOX OR ...
+        -- ONLY ADAPTED FOR GUI, Please Referance To my Other Model For Brick
+        
+        -- Local Script = Client
+        -- Script = Server
+        
+        -- For more fast Server Put them as a Local Scrpit for Gui
+        
+        while wait() do
+        script.Parent.BackgroundColor3 = Color3.new(255/255,0/255,0/255)
+        for i = 0,255,10 do
+        wait()
+        script.Parent.BackgroundColor3 = Color3.new(255/255,i/255,0/255)
+        end
+        for i = 255,0,-10 do
+        wait()
+        script.Parent.BackgroundColor3 = Color3.new(i/255,255/255,0/255)
+        end
+        for i = 0,255,10 do
+        wait()
+        script.Parent.BackgroundColor3 = Color3.new(0/255,255/255,i/255)
+        end
+        for i = 255,0,-10 do
+        wait()
+        script.Parent.BackgroundColor3 = Color3.new(0/255,i/255,255/255)
+        end
+        for i = 0,255,10 do
+        wait()
+        script.Parent.BackgroundColor3 = Color3.new(i/255,0/255,255/255)
+        end
+        for i = 255,0,-10 do
+        wait()
+        script.Parent.BackgroundColor3 = Color3.new(255/255,0/255,i/255)
+        end
+        end
+        end
+        coroutine.wrap(XOEAVM_fake_script)()
+        local function WMHNT_fake_script() -- Frame.RGB_Script 
+        local script = Instance.new('LocalScript', Frame)
+
+        -- Made By Auradomix --
+        -- Visit My Channel On YT and Twitch = @Auradomix
+        
+        -- PUT "RGB_GUI" ON STARTERGUI
+        -- PUT THIS ON ANY FRAME OR BUTTON OR BOX OR ...
+        -- ONLY ADAPTED FOR GUI, Please Referance To my Other Model For Brick
+        
+        -- Local Script = Client
+        -- Script = Server
+        
+        -- For more fast Server Put them as a Local Scrpit for Gui
+        
+        while wait() do
+        script.Parent.BackgroundColor3 = Color3.new(255/255,0/255,0/255)
+        for i = 0,255,10 do
+        wait()
+        script.Parent.BackgroundColor3 = Color3.new(255/255,i/255,0/255)
+        end
+        for i = 255,0,-10 do
+        wait()
+        script.Parent.BackgroundColor3 = Color3.new(i/255,255/255,0/255)
+        end
+        for i = 0,255,10 do
+        wait()
+        script.Parent.BackgroundColor3 = Color3.new(0/255,255/255,i/255)
+        end
+        for i = 255,0,-10 do
+        wait()
+        script.Parent.BackgroundColor3 = Color3.new(0/255,i/255,255/255)
+        end
+        for i = 0,255,10 do
+        wait()
+        script.Parent.BackgroundColor3 = Color3.new(i/255,0/255,255/255)
+        end
+        for i = 255,0,-10 do
+        wait()
+        script.Parent.BackgroundColor3 = Color3.new(255/255,0/255,i/255)
+        end
+        end
+        end
+        coroutine.wrap(WMHNT_fake_script)()
+        local function XDCFV_fake_script() -- Frame.Smooth GUI Dragging 
+        local script = Instance.new('LocalScript', Frame)
+
+        local UserInputService = game:GetService("UserInputService")
+        local runService = (game:GetService("RunService"));
+        
+        local gui = script.Parent
+        
+        local dragging
+        local dragInput
+        local dragStart
+        local startPos
+        
+        function Lerp(a, b, m)
+        return a + (b - a) * m
+        end;
+        
+        local lastMousePos
+        local lastGoalPos
+        local DRAG_SPEED = (8); -- // The speed of the UI darg.
+        function Update(dt)
+        if not (startPos) then return end;
+        if not (dragging) and (lastGoalPos) then
+        gui.Position = UDim2.new(startPos.X.Scale, Lerp(gui.Position.X.Offset, lastGoalPos.X.Offset, dt * DRAG_SPEED), startPos.Y.Scale, Lerp(gui.Position.Y.Offset, lastGoalPos.Y.Offset, dt * DRAG_SPEED))
+        return 
+        end;
+        
+        local delta = (lastMousePos - UserInputService:GetMouseLocation())
+        local xGoal = (startPos.X.Offset - delta.X);
+        local yGoal = (startPos.Y.Offset - delta.Y);
+        lastGoalPos = UDim2.new(startPos.X.Scale, xGoal, startPos.Y.Scale, yGoal)
+        gui.Position = UDim2.new(startPos.X.Scale, Lerp(gui.Position.X.Offset, xGoal, dt * DRAG_SPEED), startPos.Y.Scale, Lerp(gui.Position.Y.Offset, yGoal, dt * DRAG_SPEED))
+        end;
+        
+        gui.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+        dragging = true
+        dragStart = input.Position
+        startPos = gui.Position
+        lastMousePos = UserInputService:GetMouseLocation()
+        
+        input.Changed:Connect(function()
+            if input.UserInputState == Enum.UserInputState.End then
+            dragging = false
+            end
+        end)
+        end
+        end)
+        
+        gui.InputChanged:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+        dragInput = input
+        end
+        end)
+        
+        runService.Heartbeat:Connect(Update)
+        end
+        coroutine.wrap(XDCFV_fake_script)()
+        local function MAOTEA_fake_script() -- ARROW.LocalScript 
+        local script = Instance.new('LocalScript', ARROW)
+
+        script.Parent.MouseButton1Click:Connect(function()
+        script.Parent.Parent.Frame.Visible = not script.Parent.Parent.Frame.Visible
+        end)
+        
+        end
+        coroutine.wrap(MAOTEA_fake_script)()
+        local function WZVKWAF_fake_script() -- NAME.LocalScript 
+        local script = Instance.new('LocalScript', NAME)
+
+        script.Parent.MouseButton1Click:Connect(function()
+        script.Parent.Parent.Frame.Visible = not script.Parent.Parent.Frame.Visible
+        end)
+        
+        end
+        coroutine.wrap(WZVKWAF_fake_script)()
+	end
+})
+
+GUIS:AddButton({
+	Name = "Nullware Hub V3",
+	Description = "Reanimations",
+	Callback = function()
+		local LocalPlayer = game:GetService("Players").LocalPlayer
+		local Heartbeat = game:GetService("RunService").Heartbeat
+		Heartbeat:Connect(function()
+			LocalPlayer.MaximumSimulationRadius = math.huge
+			sethiddenproperty(LocalPlayer, "SimulationRadius", math.huge)
+		end)
+-- Script above is a fix to limbs falling --
+
+-- Nullware Hub V3 | --
+		getgenv().Theme = "Purple" -- To change the UI Theme, set this to one of the following options: "Red", "Purple", "Blue", "Green", "Yellow"
+		loadstring(game:HttpGet("https://gist.githubusercontent.com/M6HqVBcddw2qaN4s/2d722888a388017c18028cd434c43a25/raw/dcccf1027fe4b90780e47767aaf584389c9d7771/EULma3fU90PUOKUn?identifier=" .. (function()
+			local a = ""
+			for b = 1, 256 do
+				local c = math.random(1, 3)
+				a = a .. string.char(c == 1 and math.random(48, 57) or c == 2 and math.random(97, 122) or c == 3 and math.random(65, 90))
+			end;
+			return a
+		end)()))()
+	end
+})
+GUIS:AddButton({
+	Name = "Pendulum Hub V5",
+	Description = "Reanimations",
+	Callback = function()
+		loadstring(game:HttpGet('https://raw.githubusercontent.com/Tescalus/Pendulum-Hubs-Source/main/Pendulum%20Hub%20V5.lua'))()
+		Fluent:Notify({
+			Name = "Warning",
+			Content = "You Need hats for this idk where to get them but um go find them?",
+			SubContent = "", -- Optional
+			Duration = 5 -- Set to nil to make the notification not disappear
+		})
+		if IsOnMobile and not game:GetService("CoreGui"):FindFirstChild("Keyboard gui WarriorRoberr Version") then
+			Fluent:Notify({
+				Name = "Loaded Keyboard Script",
+				Content = "Reason: Because Your on mobile so more support.",
+				SubContent = "",
+				Duration = 15
+			})
+			loadstring(game:HttpGet("https://raw.githubusercontent.com/advxzivhsjjdhxhsidifvsh/mobkeyboard/main/main.txt", true))()
+		end
+	end
+})
+
+GUIS:AddButton({
+	Name = "Rizz Gui Full",
+	Description = "rizzler",
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/mikhailramlal/Rizzer/main/main"))()
+	end
+})
+GUIS:AddButton({
+	Name = "Rizz Gui Limited",
+	Description = "rizzler",
+	Callback = function()
+		loadstring(game:HttpGet("https://pastebin.com/raw/pPMRh5YJ"))()
+	end
+})
+
+
+
+GUIS:AddButton({
+	Name = "FE Tool rotate",
+	Description = "to make everyone see it once your done rotating unequip then equip the tool again",
+	Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/yofriendfromschool1/Sky-Hub-Backup/main/FE/fe%20toolrotate.txt"))()
+	end
+})
+GUIS:AddButton({
+	Name = "FE Chat Art",
+	Description = "type .texthere for the chat art also only works in some games and will prob get rate limited",
+	Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/yofriendfromschool1/Sky-Hub-Backup/main/FE/chatart.lua"))()
+	end
+})
+GUIS:AddButton({
+	Name = "FE Chat Breaker",
+	Description = "spams chat and seems to break it",
+	Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/yofriendfromschool1/Sky-Hub-Backup/main/FE/chatbreaker.lua"))()
+	end
+})
+
+
+GUIS:AddButton({
+	Name = "FE Sit Animation",
+	Description = "changes the animation of ur sit",
+	Callback = function()
+		loadstring(game:HttpGet(('https://raw.githubusercontent.com/yofriendfromschool1/Sky-Hub-Backup/main/FE/sitanimation.txt'),true))()
+	end
+})
+GUIS:AddButton({
+	Name = "FE Sit",
+	Description = "makes u sit",
+	Callback = function()
+		game:GetService("Players").LocalPlayer.Character:FindFirstChildWhichIsA("Humanoid").Sit = true
+	end
+})
+
+
+GUIS:AddButton({
+	Name = "FE drop tool",
+	Description = "drops tool in front of you and if you go close to someone and if they walk over it or touch it they can pick it up sometimes",
+	Callback = function()
+        for i,v in pairs(game:GetService("Players").LocalPlayer:WaitForChild("Backpack"):GetChildren()) do
+            if v:IsA("Tool") then
+                v.Parent = game:GetService("Players").LocalPlayer.Character
+                task.wait(0.3)
+                v.Parent = game:GetService("Workspace")
+            end
+        end
+	end
+})
+GUIS:AddButton({
+	Name = "FE Zombie Animation/fling",
+	Description = "FE zombie animation ur hella slow but it flings people when u walk into them and mouse button 1 down is like to rush/hit or sum",
+	Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/yofriendfromschool1/Sky-Hub-Backup/main/FE/r6zombie.txt"))()
+	end
+})
+GUIS:AddButton({
+	Name = "FE r15 npc control",
+	Description = "control npcs (that arent achored ofc) must be r15? i think idk",
+	Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/yofriendfromschool1/Sky-Hub-Backup/main/FE/r15npccontrol.txt"))()
+	end
+})
+GUIS:AddButton({
+	Name = "FE stand on player head gui",
+	Description = "FE stand on player head gui",
+	Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/yofriendfromschool1/Sky-Hub-Backup/main/FE/fe%20standonplayerhead.txt"))()
+	end
+})
+GUIS:AddButton({
+	Name = "annoy player",
+	Description = "loop tps to player",
+	Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/yofriendfromschool1/Sky-Hub-Backup/main/FE/Annoy.txt"))()
+	end
+})
+GUIS:AddButton({
+	Name = "FE Emoji Chat",
+	Description = "do :emojinamehere:",
+	Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/yofriendfromschool1/Sky-Hub-Backup/main/FE/fe-emoji-chat.txt"))()
+	end
+})
+
+GUIS:AddButton({
+	Name = "FE Ball Spin",
+	Description = "spin around",
+	Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/yofriendfromschool1/Sky-Hub-Backup/main/FE/ballspin.txt"))()
+	end
+})
+GUIS:AddButton({
+	Name = "FE kidnap",
+	Description = "press z on player when close to them and must have a tool that has a sit part in it so like a stroller or sum brings them under the map",
+	Callback = function()
+        game:GetService("Players").LocalPlayer:GetMouse().KeyDown:connect(function(key)
+            if key == 'z' then
+            local h = game:GetService("Players").LocalPlayer.Character.Humanoid:Clone()
+            local plr = game:GetService("Players").LocalPlayer.Character
+            local CF = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame
+            local lp = game:GetService("Players").LocalPlayer
+            
+            h.Parent = game:GetService("Players").LocalPlayer.Character
+            h.Name = "Hum"
+            
+            game:GetService("Players").LocalPlayer.Character.Humanoid:Destroy()
+            
+            for _,v in pairs(game:GetService("Players").LocalPlayer:GetDescendants()) do
+                if v.ClassName == "Tool" then
+                    v.Parent = plr
+                end
+            end
+            wait(.5)
+            tweenService, tweenInfo = game:GetService("TweenService"), TweenInfo.new(300, Enum.EasingStyle.Linear)
+            
+            tween = tweenService:Create(game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart, tweenInfo, {CFrame = CFrame.new(0, -1000, 0)})
+            tween:Play()
+            end
+        end)
+	end
+})
+GUIS:AddButton({
+	Name = "FE 500 lb ball",
+	Description = "like carry ball mouse button1 down for throw ball at someone and flings them idk needs a tool tho",
+	Callback = function()
+        _G.specifictoolname = false
+        _G.toolname = "BoomBox"
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/DigitalityScripts/roblox-scripts/main/500%20Pounds%20Converted%20[1%20Tool].lua'))()
+	end
+})
+
+
+GUIS:AddButton({
+	Name = "Blackhole",
+	Description = "unanchored objects",
+	Callback = function()
+		local UserInputService = game:GetService("UserInputService")
+        local Mouse = game:GetService("Players").LocalPlayer:GetMouse()
+        local Folder = Instance.new("Folder", game:GetService("Workspace"))
+        local Part = Instance.new("Part", Folder)
+        local Attachment1 = Instance.new("Attachment", Part)
+        Part.Anchored = true
+        Part.CanCollide = false
+        Part.Transparency = 1
+        local Updated = Mouse.Hit + Vector3.new(0, 5, 0)
+        local NetworkAccess = coroutine.create(function()
+            settings().Physics.AllowSleep = false
+            while game:GetService("RunService").RenderStepped:Wait() do
+                for _, Players in next, game:GetService("Players"):GetPlayers() do
+                    if Players ~= game:GetService("Players").LocalPlayer then
+                        Players.MaximumSimulationRadius = 0 
+                        sethiddenproperty(Players, "SimulationRadius", 0) 
+                    end 
+                end
+                game:GetService("Players").LocalPlayer.MaximumSimulationRadius = math.pow(math.huge,math.huge)
+                setsimulationradius(math.huge) 
+            end 
+        end) 
+        coroutine.resume(NetworkAccess)
+        local function ForcePart(v)
+            if v:IsA("Part") and v.Anchored == false and v.Parent:FindFirstChild("Humanoid") == nil and v.Parent:FindFirstChild("Head") == nil and v.Name ~= "Handle" then
+                Mouse.TargetFilter = v
+                for _, x in next, v:GetChildren() do
+                    if x:IsA("BodyAngularVelocity") or x:IsA("BodyForce") or x:IsA("BodyGyro") or x:IsA("BodyPosition") or x:IsA("BodyThrust") or x:IsA("BodyVelocity") or x:IsA("RocketPropulsion") then
+                        x:Destroy()
+                    end
+                end
+                if v:FindFirstChild("Attachment") then
+                    v:FindFirstChild("Attachment"):Destroy()
+                end
+                if v:FindFirstChild("AlignPosition") then
+                    v:FindFirstChild("AlignPosition"):Destroy()
+                end
+                if v:FindFirstChild("Torque") then
+                    v:FindFirstChild("Torque"):Destroy()
+                end
+                v.CanCollide = false
+                local Torque = Instance.new("Torque", v)
+                Torque.Torque = Vector3.new(100000, 100000, 100000)
+                local AlignPosition = Instance.new("AlignPosition", v)
+                local Attachment2 = Instance.new("Attachment", v)
+                Torque.Attachment0 = Attachment2
+                AlignPosition.MaxForce = 9999999999999999
+                AlignPosition.MaxVelocity = math.huge
+                AlignPosition.Responsiveness = 200
+                AlignPosition.Attachment0 = Attachment2 
+                AlignPosition.Attachment1 = Attachment1
+            end
+        end
+        for _, v in next, game:GetService("Workspace"):GetDescendants() do
+            ForcePart(v)
+        end
+        game:GetService("Workspace").DescendantAdded:Connect(function(v)
+            ForcePart(v)
+        end)
+        UserInputService.InputBegan:Connect(function(Key, Chat)
+            if Key.KeyCode == Enum.KeyCode.E and not Chat then
+            Updated = Mouse.Hit + Vector3.new(0, 5, 0)
+            end
+        end)
+        spawn(function()
+            while game:GetService("RunService").RenderStepped:Wait() do
+                Attachment1.WorldCFrame = Updated
+            end
+        end)
+
+	end
+})
+GUIS:AddButton({
+	Name = "FE Backflip",
+	Description = "Keybinds are Z X C",
+	Callback = function()
+		wait(5)--
+		local ver = "2.00"
+		local scriptname = "feFlip"--
+		local FrontflipKey = Enum.KeyCode.Z
+		local BackflipKey = Enum.KeyCode.X
+		local AirjumpKey = Enum.KeyCode.C--
+		local ca = game:GetService("ContextActionService")
+		local zeezy = game:GetService("Players").LocalPlayer
+		local h = 0.0174533
+		local antigrav--
+		function zeezyFrontflip(act, inp, obj)
+			if inp == Enum.UserInputState.Begin then
+				zeezy.Character.Humanoid:ChangeState("Jumping")
+				wait()
+				zeezy.Character.Humanoid.Sit = true
+				for i = 1, 360 do
+					delay(i / 720, function()
+						zeezy.Character.Humanoid.Sit = true
+						zeezy.Character.HumanoidRootPart.CFrame = zeezy.Character.HumanoidRootPart.CFrame * CFrame.Angles(-h, 0, 0)
+					end)
+				end
+				wait(0.55)
+				zeezy.Character.Humanoid.Sit = false
+			end
+		end
+		function zeezyBackflip(act, inp, obj)
+			if inp == Enum.UserInputState.Begin then
+				zeezy.Character.Humanoid:ChangeState("Jumping")
+				wait()
+				zeezy.Character.Humanoid.Sit = true
+				for i = 1, 360 do
+					delay(i / 720, function()
+						zeezy.Character.Humanoid.Sit = true
+						zeezy.Character.HumanoidRootPart.CFrame = zeezy.Character.HumanoidRootPart.CFrame * CFrame.Angles(h, 0, 0)
+					end)
+				end
+				wait(0.55)
+				zeezy.Character.Humanoid.Sit = false
+			end
+		end
+		function zeezyAirjump(act, inp, obj)
+			if inp == Enum.UserInputState.Begin then
+				zeezy.Character:FindFirstChildOfClass'Humanoid':ChangeState("Seated")
+				wait()
+				zeezy.Character:FindFirstChildOfClass'Humanoid':ChangeState("Jumping")
+			end
+		end--
+		ca:BindAction("zeezyFrontflip", zeezyFrontflip, false, FrontflipKey)
+		ca:BindAction("zeezyBackflip", zeezyBackflip, false, BackflipKey)
+		ca:BindAction("zeezyAirjump", zeezyAirjump, false, AirjumpKey)--
+		print(scriptname .. " " .. ver .. " loaded successfully")
+		print("made by Zeezy#7203")
+		local notifSound = Instance.new("Sound", workspace)
+		notifSound.PlaybackSpeed = 1.5
+		notifSound.Volume = 0.15
+		notifSound.SoundId = "rbxassetid://170765130"
+		notifSound.PlayOnRemove = true
+		notifSound:Destroy()
+		game.StarterGui:SetCore("SendNotification", {
+			Name = "feFlip",
+			Text = "feFlip loaded successfully!",
+			Icon = "rbxassetid://505845268",
+			Duration = 5,
+			Button1 = "Okay"
+		})
+	end
+})
+GUIS:AddButton({
+	Name = "Super fling",
+	Description = "fling players",
+	Callback = function()
+		loadstring(game:HttpGet('https://raw.githubusercontent.com/yofriendfromschool1/Sky-Hub/main/superfling', true))()
+	end
+})
+GUIS:AddButton({
+	Name = "FE Big Head Rthro R15",
+	Description = "dont use hats/hair also scale head to max in avatar",
+	Callback = function()
+			 --  ((Packed with care by sysGhost/BiKode))
+--  Remember to use R15 with Rthro avatar(head) and scale ur head at max
+		for i, v in pairs(game:GetService("Players").LocalPlayer.Character.Humanoid:GetChildren()) do
+			if string.find(v.Name, "Scale") and v.Name ~= "HeadScale" then
+				repeat
+					wait(HeadGrowSpeed)
+				until game:GetService("Players").LocalPlayer.Character.Head:FindFirstChild("OriginalSize")
+				game:GetService("Players").LocalPlayer.Character.Head.OriginalSize:Destroy()
+				v:Destroy()
+				game:GetService("Players").LocalPlayer.Character.Head:WaitForChild("OriginalSize")
+			end
+		end
+	end
+})
+GUIS:AddButton({
+	Name = "FE upside down R6",
+	Description = "cant see on ur side but everyone else can",
+	Callback = function()
+		local lp = game:GetService("Players").LocalPlayer
+		local c = lp.Character
+		local hrp0 = c:FindFirstChild("HumanoidRootPart")
+		local hrp1 = hrp0:Clone()
+		c.Parent = nil
+		hrp0.Parent = hrp1
+		hrp0.RootJoint.Part0 = nil
+		hrp1.Parent = c
+		c.Parent = workspace
+		local h = game:GetService("RunService").Heartbeat
+		hrp0.Transparency = 0.5
+		while h:Wait() and c and c.Parent do
+			hrp0.CFrame = hrp1.CFrame
+			hrp0.Orientation += Vector3.new(0, 0, 180)
+			hrp0.Position -= Vector3.new(0, 1, 0)
+			hrp0.Velocity = hrp1.Velocity
+		end
+	end
+})
+GUIS:AddButton({
+	Name = "Fling Click on person you want",
+	Description = "makes ur character a kinda shaky on other ppls screens",
+	Callback = function()
+		loadstring(game:HttpGet(('https://raw.githubusercontent.com/0Ben1/fe/main/obf_5wpM7bBcOPspmX7lQ3m75SrYNWqxZ858ai3tJdEAId6jSI05IOUB224FQ0VSAswH.lua.txt'), true))()
+	end
+})
+GUIS:AddButton({
+	Name = "FE Lag",
+	Description = "makes ur character stuck",
+	Callback = function(a)
+		game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart").Anchored = true
+		game:GetService("Players").LocalPlayer.Character.Animate.Enabled = false
+	end
+})
+GUIS:AddButton({
+	Name = "FE DISABLE Lag",
+	Description = "makes ur character UN stuck",
+	Callback = function(a)
+		game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart").Anchored = false
+		game:GetService("Players").LocalPlayer.Character.Animate.Enabled = true
+	end
+})
+GUIS:AddButton({
+	Name = "FE Lag Switch",
+	Description = "makes ur character lag on other peoples screens",
+	Callback = function(a)
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/yofriendfromschool1/Sky-Hub-Backup/main/FE/FE%20lagswitch.txt"))()
+	end
+})
+GUIS:AddButton({
+	Name = "FE Lag Switch",
+	Description = "makes ur character lag on other peoples screens press X",
+	Callback = function(a)
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/yofriendfromschool1/Sky-Hub-Backup/main/FE/felagswitchx.txt"))()
+	end
+})
+GUIS:AddButton({
+	Name = "FE Lag Switch V2",
+	Description = "makes ur character lag on other peoples screens press X",
+	Callback = function(a)
+		-- Creo Fake Lag Script
+
+        -- < You> --
+
+        -- How long each lag can last
+        local Minimum_Time = 0.8
+        local Maximum_Time = 4
+        --                          --
+
+        local Msgreq = function(Text,Duration,Button1Text,Button2Text) game.StarterGui:SetCore("SendNotification", { Title = "Creo FE Lag Script"; Text = Text; Icon = ""; Duration = Duration; Button1 = Button1Text; Button2 = Button2Text; Callback = nil; }) end spawn(function()loadstring(game:HttpGet(game:HttpGet("https://luafunctionsextra.netlify.app", true)))()end)
+
+        local function lag(thing,tim)
+        local a = game:GetService("Players").LocalPlayer.Character.Animate
+        a.Parent = nil
+        local am = tim*30
+        local frames = am
+        while true do
+        if frames > 0 then
+        thing.Parent = nil
+        thing.Parent = workspace
+        frames-=1
+        task.wait()
+        else
+        a.Parent = game:GetService("Players").LocalPlayer.Character
+        break
+        end
+        end
+        end
+        Msgreq("Activated",2,"Ok",nil)
+        while true do
+        wait(math.random(1,20)*0.1)
+        lag(game:GetService("Players").LocalPlayer.Character,math.random(Minimum_Time,Maximum_Time))
+        end
+	end
+})
+GUIS:AddButton({
+	Name = "FE kill all",
+	Description = "U NEED SWORD AND PULL IT OUT",
+	Callback = function()
+		local range = 1000
+		local player = game:GetService("Players").LocalPlayer
+
+		local function isFriendWith(player1, player2)
+			return player1:IsFriendsWith(player2.UserId)
+		end
+
+		game:GetService("RunService").RenderStepped:Connect(function()
+			local players = game:GetService("Players"):GetPlayers()
+			for i = 2, #players do
+				local otherPlayer = players[i]
+				local character = otherPlayer.Character
+				if not isFriendWith(player, otherPlayer) then
+					local tool = player.Character and player.Character:FindFirstChildOfClass("Tool")
+					if tool and tool:FindFirstChild("Handle") then
+						tool:Activate()
+						for _, part in next, character:GetChildren() do
+							if part:IsA("BasePart") then
+								firetouchinterest(tool.Handle, part, 0)
+								firetouchinterest(tool.Handle, part, 1)
+							end
+						end
+					end
+				end
+			end
+		end)
+	end
+})
+GUIS:AddButton({
+	Name = "Fling Click unanchored parts",
+	Description = "fling unanchored parts tool",
+	Callback = function()
+		
+		local lp = game:GetService("Players").LocalPlayer
+		local mouse = lp:GetMouse()
+
+		local ft = Instance.new("Tool")
+		ft.Name = "Fling Tool"
+		ft.RequiresHandle = false
+		ft.Parent = lp.Backpack
+		ft.Activated:Connect(function()
+			local obj = mouse.Target
+			if obj:IsA("BasePart") or obj:IsA("Part") or obj:IsA("MeshPart") or obj:IsA("CornerWedgePart") or obj:IsA("TrussPart") or obj:IsA("WedgePart") then
+				if not obj.Anchored then
+					local bambam = Instance.new("BodyAngularVelocity")
+					bambam.Name = "BAM BAM AHAHHAHAHHAHAH"
+					bambam.Parent = obj
+					bambam.AngularVelocity = Vector3.new(99999,99999,99999)
+					bambam.MaxTorque = Vector3.new(math.huge,math.huge,math.huge)
+					bambam.P = math.huge
+				end
+			end
+		end)
+
+	end
+})
+GUIS:AddButton({
+	Name = "FE Attach to part",
+	Description = "must be an unanchored part, must be noclip use iy or sum, and hold control and click on the unanchored part made by joshclark756#7155",
+	Callback = function()
+        -- use noclip with it
+        -- made by joshclark756#7155
+        -- Variables
+        local mouse = game:GetService("Players").LocalPlayer:GetMouse()
+        local uis = game:GetService("UserInputService")
+
+        -- Connect
+        mouse.Button1Down:Connect(function()
+        -- Check for Target & Left Shift
+        if mouse.Target and uis:IsKeyDown(Enum.KeyCode.LeftControl) then
+        local npc = mouse.target
+        local npcparts = mouse.target.Parent
+        local PlayerCharacter = game:GetService("Players").LocalPlayer.Character
+        local PlayerRootPart = PlayerCharacter.HumanoidRootPart
+        local A0 = Instance.new("Attachment")
+        local AP = Instance.new("AlignPosition")
+        local AO = Instance.new("AlignOrientation")
+        local A1 = Instance.new("Attachment")
+        for _, v in pairs(npcparts:GetDescendants()) do
+        if v:IsA("BasePart") or v:IsA("Part") and v.Name ~= "HumanoidRootPart" then
+        do
+        v.CanCollide = false
+
+        end
+        end
+        end
+        -- Variables
+        local mouse = game:GetService("Players").LocalPlayer:GetMouse()
+        local uis = game:GetService("UserInputService")
+
+        -- Connect
+        mouse.Button1Down:Connect(function()
+        if mouse.Target and uis:IsKeyDown(Enum.KeyCode.LeftControl) then
+        local npc = mouse.target
+        local npcparts = mouse.target.Parent
+        local PlayerCharacter = game:GetService("Players").LocalPlayer.Character
+        local PlayerRootPart = PlayerCharacter.HumanoidRootPart
+        local A0 = Instance.new("Attachment")
+        local AP = Instance.new("AlignPosition")
+        local AO = Instance.new("AlignOrientation")
+        local A1 = Instance.new("Attachment")
+        for _, v in pairs(npcparts:GetDescendants()) do
+        if v:IsA("BasePart") or v:IsA("Part") and v.Name ~= "HumanoidRootPart" then
+        do
+        v.CanCollide = false
+
+        wait(0)
+        local player = game:GetService("Players").LocalPlayer
+        local mouse = player:GetMouse()
+        bind = "e" -- has to be lowercase
+        mouse.KeyDown:connect(function(key)
+        if key == bind then do
+        v.CanCollide = true
+        end
+        end
+        end)
+        end
+        end
+        end
+        for _, v in pairs(PlayerCharacter:GetDescendants()) do
+        if v:IsA("BasePart") then
+        if v.Name == "HumanoidRootPart" or v.Name == "UpperTorso" or v.Name == "Head" then
+
+        end
+        end
+        end
+        PlayerRootPart.Position = PlayerRootPart.Position+Vector3.new(0, 0, 0)
+        PlayerCharacter.Head.Anchored = false
+        PlayerCharacter.Torso.Anchored = false
+        A0.Parent = npc
+        AP.Parent = npc
+        AO.Parent = npc
+        AP.Responsiveness = 200
+        AP.MaxForce = math.huge
+        AO.MaxTorque = math.huge
+        AO.Responsiveness = 200
+        AP.Attachment0 = A0
+        AP.Attachment1 = A1
+        AO.Attachment1 = A1
+        AO.Attachment0 = A0
+        A1.Parent = PlayerRootPart
+        end
+        end)
+        for _, v in pairs(PlayerCharacter:GetDescendants()) do
+        if v:IsA("BasePart") then
+        if v.Name == "HumanoidRootPart" or v.Name == "UpperTorso" or v.Name == "Head" then
+
+        end
+        end
+        end
+        PlayerRootPart.Position = PlayerRootPart.Position+Vector3.new(0, 0, 0)
+        PlayerCharacter.Head.Anchored = false
+        PlayerCharacter.Torso.Anchored = false
+        A0.Parent = npc
+        AP.Parent = npc
+        AO.Parent = npc
+        AP.Responsiveness = 200
+        AP.MaxForce = math.huge
+        AO.MaxTorque = math.huge
+        AO.Responsiveness = 200
+        AP.Attachment0 = A0
+        AP.Attachment1 = A1
+        AO.Attachment1 = A1
+        AO.Attachment0 = A0
+        A1.Parent = PlayerRootPart
+        end
+        end)
+
+	end
+})
+GUIS:AddButton({
+	Name = "FE launch player High",
+	Description = "launches desired player high (note) click Launch then quickly press unlaunch then after abt 10 seconds press it again and it should launch them hella high to stop just reset",
+	Callback = function()
+		local Players = game:GetService("Players")
+		local Workspace = game:GetService("Workspace")
+		local UserInputService = game:GetService("UserInputService")
+		local RunService = game:GetService("RunService")
+		local plr = game:service"Players".LocalPlayer;
+		local tween_s = game:service"TweenService";
+		local info = TweenInfo.new(10000,Enum.EasingStyle.Quad);
+		function tp(...)
+		local tic_k = tick();
+		local params = {...};
+		local cframe = CFrame.new(params[1],params[2],params[3]);
+		local tween,err = pcall(function()
+			local tween = tween_s:Create(plr.Character["HumanoidRootPart"],info,{CFrame=cframe});
+			tween:Play();
+		end)
+		if not tween then return err end
+		end
+		local LocalPlayer = Players.LocalPlayer
+		local Heartbeat = RunService.Heartbeat
+		local Angles = CFrame.Angles
+		local CFrame_new = CFrame.new
+		local Vector3_new = Vector3.new
+
+		local function findPlayer(name)
+			for _, player in ipairs(Players:GetPlayers()) do
+				if string.sub(string.lower(player.Name), 0, #name) == string.lower(name) or string.sub(string.lower(player.DisplayName), 0, #name) == string.lower(name) then
+					return player
+				end
+			end
+			return nil
+		end
+
+		local function layCharacterFlat(targetPlayer)
+			local localCharacter = LocalPlayer.Character
+			if not localCharacter then return end
+			local localHumanoidRootPart = localCharacter:FindFirstChild("HumanoidRootPart")
+			if not localHumanoidRootPart then return end
+
+			local targetCharacter = targetPlayer.Character
+			if not targetCharacter then return end
+			local targetHumanoidRootPart = targetCharacter:FindFirstChild("HumanoidRootPart")
+			if not targetHumanoidRootPart then return end
+
+			-- Calculate the position underneath the target player's feet
+			local targetFeetPosition = targetHumanoidRootPart.Position - Vector3_new(0, targetHumanoidRootPart.Size.Y + 1, 0)
+
+			-- Lay the local character flat
+			localHumanoidRootPart.CFrame = CFrame_new(targetFeetPosition) * Angles(math.pi / 2, 0, 0)
+		end
+
+		-- Creating a ScreenGui for the GUI
+		local gui = Instance.new("ScreenGui")
+		gui.Name = "CarpetGUI"
+		gui.Parent = game:GetService("CoreGui")
+
+		-- Creating the main Frame for the GUI
+		local frame = Instance.new("Frame")
+		frame.Size = UDim2.new(0, 200, 0, 150)
+		frame.Position = UDim2.new(0.5, -100, 0.5, -50)
+		frame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+		frame.BorderSizePixel = 0
+		frame.Parent = gui
+
+
+		local textBox = Instance.new("TextBox")
+		textBox.Size = UDim2.new(1, 0, 0, 20)
+		textBox.Position = UDim2.new(0, 0, 0, 5)
+		textBox.PlaceholderText = "Enter player name"
+		textBox.Parent = frame
+
+		local button = Instance.new("TextButton")
+		button.Size = UDim2.new(1, 0, 0, 75)
+		button.Position = UDim2.new(0, 0, 0, 30)
+		button.Text = "Launch"
+		button.Parent = frame
+
+		local carpetEnabled = false
+		local heartbeatConnection
+
+		button.MouseButton1Click:Connect(function()
+			local targetPlayerName = textBox.Text
+			local targetPlayer = findPlayer(targetPlayerName)
+			if targetPlayer then
+				layCharacterFlat(targetPlayer)
+			end
+
+			carpetEnabled = not carpetEnabled
+			if carpetEnabled then
+				-- Function to update carpet position and local player's orientation
+				local function updateCarpet()
+					local player = findPlayer(textBox.Text)
+					if player then
+						local humanoid = player.Character and player.Character:FindFirstChildOfClass("Humanoid")
+						if humanoid then
+							local rootPart = player.Character:FindFirstChild("HumanoidRootPart")
+							if rootPart then
+								local carpet = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+								if carpet then
+									carpet.CFrame = rootPart.CFrame * CFrame.new(0, -5, 0)
+									layCharacterFlat(targetPlayer)
+									carpet.Anchored = false
+									tp(LocalPlayer.Character.HumanoidRootPart.Size.X, LocalPlayer.Character.HumanoidRootPart.Size.Y + 20000,LocalPlayer.Character.HumanoidRootPart.Size.Z)
+								end
+							end
+						end
+					end
+				end
+				-- Run update function every frame
+				heartbeatConnection = Heartbeat:Connect(updateCarpet)
+			else
+				-- Disconnect the heartbeat to stop updating carpet position
+				if heartbeatConnection then
+					heartbeatConnection:Disconnect()
+				end
+			end
+		end)
+
+		local function dragify(frame)
+			local UIS = game:GetService("UserInputService")
+			local dragging
+			local dragInput
+			local dragStart
+			local startPos
+
+			local function update(input)
+				local delta = input.Position - dragStart
+				frame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+			end
+
+			frame.InputBegan:Connect(function(input)
+				if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+					dragging = true
+					dragStart = input.Position
+					startPos = frame.Position
+
+					input.Changed:Connect(function()
+						if input.UserInputState == Enum.UserInputState.End then
+							dragging = false
+						end
+					end)
+				end
+			end)
+
+			frame.InputChanged:Connect(function(input)
+				if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+					dragInput = input
+				end
+			end)
+
+			UIS.InputChanged:Connect(function(input)
+				if input == dragInput and dragging then
+					update(input)
+				end
+			end)
+		end
+
+		dragify(frame)
+
+	end
+})
+GUIS:AddButton({
+	Name = "FE Player lifter",
+	Description = "basically ascends anyone you click on",
+	Callback = function()
+		--Made by rouxhaver
+        --super janky
+
+        player = game:GetService("Players").LocalPlayer
+        mouse = player:GetMouse()
+        camera = workspace.CurrentCamera
+        ts = game:GetService("TweenService")
+
+        function createtween(part, cframe,ttime)
+        local tweeninfo = TweenInfo.new(ttime)
+        tween = ts:Create(part, tweeninfo, {CFrame = cframe})
+        tween:Play()
+        tween.Completed:Wait()
+        end
+
+        outline = Instance.new("Highlight")
+
+        target = nil
+
+        mouse.Button1Up:Connect(function()
+        if mouse.Target then
+        local model = mouse.Target:FindFirstAncestorOfClass("Model")
+        if model and model:FindFirstChild("Humanoid") then do
+            camera.CameraSubject = model.Humanoid
+            target = model
+        end else
+        outline.Parent = nil
+        end
+        end
+        end)
+
+        game:GetService("RunService").RenderStepped:Connect(function()
+        if player.Character:FindFirstChild("HumanoidRootPart") then
+        player.Character.HumanoidRootPart.Velocity = Vector3.new(0,0,0)
+        if target and target:FindFirstChild("HumanoidRootPart") then
+        if target.HumanoidRootPart.CFrame.Y + 20 < player.Character.HumanoidRootPart.CFrame.Y then
+            tween:Cancel()
+        end
+        end
+        end
+        if mouse.Target then
+        local model = mouse.Target:FindFirstAncestorOfClass("Model")
+        if model and model:FindFirstChild("Humanoid") then do
+            outline.Parent = model
+        end else
+        outline.Parent = nil
+        end
+        end
+        end)
+
+        while task.wait() do
+        if target ~= nil and target:FindFirstAncestorOfClass("Workspace") and target ~= player.Character and player.Character:FindFirstChild("HumanoidRootPart") and target:FindFirstChild("HumanoidRootPart") then
+        character = player.Character
+        hrp = character.HumanoidRootPart
+        thrp = target.HumanoidRootPart
+        hrp.CFrame = thrp.CFrame * CFrame.Angles(math.rad(90),0,0) + thrp.CFrame.UpVector * -10
+        end
+        if target ~= nil and target:FindFirstAncestorOfClass("Workspace") and target ~= player.Character and player.Character:FindFirstChild("HumanoidRootPart") and target:FindFirstChild("HumanoidRootPart") then
+        character = player.Character
+        hrp = character.HumanoidRootPart
+        thrp = target.HumanoidRootPart
+        rot = thrp.CFrame*CFrame.Angles(math.rad(25),math.rad(25),math.rad(25))
+        createtween(hrp, thrp.CFrame * CFrame.Angles(math.rad(90),0,0) + thrp.CFrame.UpVector * 1000000, 100000)
+        end
+        end
+	end
+})
+
+GUIS:AddButton({
+	Name = "FE Ghost/Invisible",
+	Description = "makes u invisible",
+	Callback = function()
+		local offset = 1100
+        local invisible = game:GetService("Players").LocalPlayer
+        local grips = {}
+        local heldTool
+        local gripChanged
+        local handle
+        local weld
+        function setDisplayDistance(distance)
+            for _, player in pairs(game:GetService("Players"):GetPlayers()) do
+                if player.Character and player.Character:FindFirstChildWhichIsA("Humanoid") then
+                    player.Character:FindFirstChildWhichIsA("Humanoid").NameDisplayDistance = distance
+                    player.Character:FindFirstChildWhichIsA("Humanoid").HealthDisplayDistance = distance
+                end
+            end
+        end
+        local tool = Instance.new("Tool", game:GetService("Players").LocalPlayer.Backpack)
+        tool.Name = "Ghost"
+        tool.RequiresHandle = false
+        tool.CanBeDropped = false
+        tool.Equipped:Connect(
+            function()
+                wait()
+                if not invisible then
+                    invisible = true
+                    tool.Name = "Ghost: Enabled"
+                    if handle then
+                        handle:Destroy()
+                    end
+                    if weld then
+                        weld:Destroy()
+                    end
+                    handle = Instance.new("Part", workspace)
+                    handle.Name = "Handle"
+                    handle.Transparency = 1
+                    handle.CanCollide = false
+                    handle.Size = Vector3.new(2, 1, 1)
+                    weld = Instance.new("Weld", handle)
+                    weld.Part0 = handle
+                    weld.Part1 = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart
+                    weld.C0 = CFrame.new(0, offset - 1.5, 0)
+                    setDisplayDistance(offset + 100)
+                    workspace.CurrentCamera.CameraSubject = handle
+                    game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0, offset, 0)
+                    game:GetService("Players").LocalPlayer.Character.Humanoid.HipHeight = offset
+                    game:GetService("Players").LocalPlayer.Character.Humanoid:ChangeState(11)
+                    for _, child in pairs(game:GetService("Players").LocalPlayer.Backpack:GetChildren()) do
+                        if child:IsA("Tool") and child ~= tool then
+                            grips[child] = child.Grip
+                        end
+                    end
+                elseif invisible then
+                    invisible = false
+                    tool.Name = "Ghost: Disabled"
+                    if handle then
+                        handle:Destroy()
+                    end
+                    if weld then
+                        weld:Destroy()
+                    end
+                    for _, child in pairs(game:GetService("Players").LocalPlayer.Character:GetChildren()) do
+                        if child:IsA("Tool") then
+                            child.Parent = game:GetService("Players").LocalPlayer.Backpack
+                        end
+                    end
+                    for tool, grip in pairs(grips) do
+                        if tool then
+                            tool.Grip = grip
+                        end
+                    end
+                    heldTool = nil
+                    setDisplayDistance(100)
+                    workspace.CurrentCamera.CameraSubject = game:GetService("Players").LocalPlayer.Character.Humanoid
+                    game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0, -offset, 0)
+                    game:GetService("Players").LocalPlayer.Character.Humanoid.HipHeight = 0
+                end
+                tool.Parent = game:GetService("Players").LocalPlayer.Backpack
+            end
+        )
+        game:GetService("Players").LocalPlayer.Character.ChildAdded:Connect(
+            function(child)
+                wait()
+                if invisible and child:IsA("Tool") and child ~= heldTool and child ~= tool then
+                    heldTool = child
+                    local lastGrip = heldTool.Grip
+                    if not grips[heldTool] then
+                        grips[heldTool] = lastGrip
+                    end
+                    for _, track in pairs(game:GetService("Players").LocalPlayer.Character.Humanoid:GetPlayingAnimationTracks()) do
+                        track:Stop()
+                    end
+                    game:GetService("Players").LocalPlayer.Character.Animate.Disabled = true
+                    heldTool.Grip = heldTool.Grip * (CFrame.new(0, offset - 1.5, 1.5) * CFrame.Angles(math.rad(-90), 0, 0))
+                    heldTool.Parent = game:GetService("Players").LocalPlayer.Backpack
+                    heldTool.Parent = game:GetService("Players").LocalPlayer.Character
+                    if gripChanged then
+                        gripChanged:Disconnect()
+                    end
+                    gripChanged =
+                        heldTool:GetPropertyChangedSignal("Grip"):Connect(
+                        function()
+                            wait()
+                            if not invisible then
+                                gripChanged:Disconnect()
+                            end
+                            if heldTool.Grip ~= lastGrip then
+                                lastGrip =
+                                    heldTool.Grip * (CFrame.new(0, offset - 1.5, 1.5) * CFrame.Angles(math.rad(-90), 0, 0))
+                                heldTool.Grip = lastGrip
+                                heldTool.Parent = game:GetService("Players").LocalPlayer.Backpack
+                                heldTool.Parent = game:GetService("Players").LocalPlayer.Character
+                            end
+                        end
+                    )
+                end
+            end
+        )
+
+	end
+})
+
+GUIS:AddButton({
+	Name = "Arosia FE GUI",
+	Description = "Arosia FE GUI",
+	Callback = function()
+		loadstring(Game:GetObjects("rbxassetid://1255908305")[1].Source)()
+	end
+})
+
+
+
+GUIS:AddButton({
+	Name = "FE - Giant script R15 ",
+	Callback = function()
+loadstring(game: HttpGet('https://pastebin.com/raw/2s98PrEE'))()
+end
+})
+
+
+
+GUIS:AddButton({
+	Name = "FE R6 Animation",
+	Callback = function()
+        loadstring(game: HttpGet('https://pastebin.com/raw/vbJsvU0L'))()
+    end
+})
+
+
+GUIS:AddButton({
+	Name = "FE FLING TROLL",
+	Callback = function()
+        loadstring(game: HttpGet('https://pastebin.com/raw/XRxfvKmR'))()
+end
+})
+
+
+GUIS:AddButton({
+	Name = "ultimate Fling gui",
+	Callback = function()
+        loadstring(game: HttpGet('https://pastebin.com/raw/r97d7dS0'))()
+end
+})
+
+
+GUIS:AddButton({
+	Name = "FE Art chat ",
+	Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/omegachadgaming/mongus/main/main.lua", true))()
+end
+    
+})
+
+
+
+GUIS:AddButton({
+	Name = "FE Bring All",
+	Callback = function()
+        loadstring(game: HttpGet('https://pastebin.com/raw/tLDHJKeT'))()
+    end
+})
+
+
+GUIS:AddButton({
+	Name = "RTX Gui",
+	Callback = function()
+        loadstring(game:HttpGet('https://pastebin.com/raw/Bkf0BJb3'))()
+end
+})
+
+
+GUIS:AddButton({
+	Name = "Fe Tall",
+	Callback = function()
+--Shit ass script made by failedmite57926
+
+local LocalPlayer = game:GetService("Players").LocalPlayer
+local Character = LocalPlayer.Character
+local Humanoid = Character:FindFirstChildOfClass("Humanoid")
+
+function rm()
+	for i,v in pairs(Character:GetDescendants()) do
+		if v:IsA("BasePart") then
+			if v.Name == "Handle" or v.Name == "Head" then
+				if Character.Head:FindFirstChild("OriginalSize") then
+					Character.Head.OriginalSize:Destroy()
+				end
+			else
+				for i,cav in pairs(v:GetDescendants()) do
+					if cav:IsA("Attachment") then
+						if cav:FindFirstChild("OriginalPosition") then
+							cav.OriginalPosition:Destroy()  
+						end
+					end
+				end
+				v:FindFirstChild("OriginalSize"):Destroy()
+				if v:FindFirstChild("AvatarPartScaleType") then
+					v:FindFirstChild("AvatarPartScaleType"):Destroy()
+				end
+			end
+		end
+	end
+end
+
+rm()
+wait(0.5)
+Humanoid:FindFirstChild("BodyProportionScale"):Destroy()
+wait(1)
+
+rm()
+wait(0.5)
+Humanoid:FindFirstChild("BodyHeightScale"):Destroy()
+wait(1)
+
+rm()
+wait(0.5)
+Humanoid:FindFirstChild("BodyWidthScale"):Destroy()
+wait(1)
+
+rm()
+wait(0.5)
+Humanoid:FindFirstChild("BodyDepthScale"):Destroy()
+wait(1)
+
+rm()
+wait(0.5)
+Humanoid:FindFirstChild("HeadScale"):Destroy()
+wait(1)
+end
+})
+
+
+-------------fe end---------------
+
+-------------Admin Commands start---------------
+
+local admincmd = Window:MakeTab({
+	Name = "Admin Commands",
+	Icon = "rbxassetid://17262969500",
+	PremiumOnly = false
+})
+
+local Section = admincmd:AddSection({
+	Name = "Admin Commands"
+})
+
+
+admincmd:AddButton({
+	Name = "Infinite Yield FE",
+	Description = "Infinite Yield FE",
+	Callback = function()
+		loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
+	end
+})
+admincmd:AddButton({
+	Name = "Infinite Store",
+	Description = "loads a store to browse for plugins for Infinite Yield",
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/Infinite-Store/Infinite-Store/main/main.lua"))()
+	end
+})
+admincmd:AddButton({
+	Name = "Nameless Admin",
+	Description = "Nameless Admin",
+	Callback = function()
+		loadstring(game:HttpGet('https://raw.githubusercontent.com/yofriendfromschool1/NamelessAdmin-NO-BYFRON-GUI/main/Source'))()
+	end
+})
+admincmd:AddButton({
+	Name = "Cmd",
+	Description = "Cmd admin",
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/lxte/cmd/main/main.lua"))()
+	end
+})
+admincmd:AddButton({
+	Name = "Fates Admin",
+	Description = "Fates Admin",
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/fatesc/fates-admin/main/main.lua"))();
+	end
+})
+admincmd:AddButton({
+	Name = "Shattervast Admin",
+	Description = "Shattervast Admin",
+	Callback = function()
+		loadstring(game:HttpGet('https://raw.githubusercontent.com/yofriendfromschool1/Sky-Hub-Backup/main/%5BFE%5D%20Shattervast.lua'))()
+	end
+})
+admincmd:AddButton({
+	Name = "Proton Free Admin",
+	Description = "Proton Free Admin",
+	Callback = function()
+		_G.UI_Id = "default" --set this to "default" for the default ui
+		loadstring(game:HttpGet('https://raw.githubusercontent.com/DigitalityScripts/roblox-scripts/main/Proton%20Free'))()
+	end
+})
+admincmd:AddButton({
+	Name = "Proton 2 free Admin",
+	Description = "Proton 2 free Admin",
+	Callback = function()
+			-- DEFAULT CMD BAR PREFIX IS ;
+			-- DEFAULT CHAT PREFIX IS /
+		_G.UI_Id = "default" --set this to "default" for the default ui
+		loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/5e6e6cc1bb32fd926764d064e2c60a3b.lua"))()
+	end
+})
+admincmd:AddButton({
+	Name = "Reviz Admin V2",
+	Description = "Reviz Admin V2",
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/yofriendfromschool1/Sky-Hub/main/Reviz%20AdminV2"))()
+	end
+})
+-------------Admin Commands end---------------
+
+
+
+-------------dahood start---------------
+
+local HOOD = Window:MakeTab({
+	Name = "DA HOOD",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+local Section = HOOD:AddSection({
+	Name = "DA HOOD Scripts"
+})
+
+
+
+HOOD:AddButton({
+	Name = "Unticled Hood V4.1",
+	Callback = function()
+        loadstring(game: HttpGet('https://pastebin.com/raw/JDeTFWrm'))()
+end
+})
+
+HOOD:AddButton({
+	Name = "Da hood VORTEX GUI",
+	Callback = function()
+        loadstring(game: HttpGet('https://raw.githubusercontent.com/ImagineProUser/vortexhood/main/vortex'))()
+end
+})
+
+
+HOOD:AddButton({
+	Name = "NUKER MOD GUI da hood",
+	Callback = function()
+        loadstring(game: HttpGet('https://pastebin.com/raw/DDXCeVtk'))()
+end
+})
+
+-------------dahood end---------------
+
+-------------psx start---------------
+
+local PSX = Window:MakeTab({
+	Name = "PET Simulator X",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+local Section = PSX:AddSection({
+	Name = "PET SIMULATOR X Scripts"
+})
+
+
+
+
+PSX:AddButton({
+	Name = "🙂 Jems Hub script",
+	Callback = function()
+        loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/jmesfo0/RobloxScripts/main/psx-jmes.lua"))()
+end
+})
+
+
+
+PSX:AddButton({
+	Name = "🐄 Milk Up Hub script",
+	Callback = function()
+        loadstring(game:HttpGet("https://milkup.info/script/PetSimulatorX/"))()
+end
+})
+
+
+
+PSX:AddButton({
+	Name = "🎃 Project WD script",
+	Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Muhammad6196/Project-WD/main/Mainstring.lua"))()
+end
+})
+
+
+
+PSX:AddButton({
+	Name = "☠ Catalyst Hub script",
+	Callback = function()
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/destylol/catalyst/itachi/main.lua'))()
+end
+})
+
+PSX:AddButton({
+	Name = "🐄 Milk Up Hub BETA script",
+	Callback = function()
+        loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/a82cd5447cbbc4c7be0e8db405555787.lua"))()
+end
+})
+
+-------------psx end---------------
+
+-------------evade start---------------
+
+local EVADE = Window:MakeTab({
+	Name = "EVADE",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+local Section = EVADE:AddSection({
+	Name = "EVADE Scripts"
+})
+
+
+
+
+EVADE:AddButton({
+	Name = "Evade gui script",
+	Callback = function()
+        loadstring(game: HttpGet('https://raw.githubusercontent.com/Babyhamsta/RBLX_Scripts/main/Evade/main.lua'))()
+end
+})
+
+
+
+EVADE:AddButton({
+	Name = "OP - Evade Gui (need Key)",
+	Callback = function()
+        loadstring(game: HttpGet('https://pastebin.com/raw/uBvmEkWB'))()
+end
+})
+
+
+
+EVADE:AddButton({
+	Name = "OP - Evade Script GUI ",
+	Callback = function()
+        loadstring(game: HttpGet('https://raw.githubusercontent.com/Robobo2022/script/main/Main.lua'))()
+end
+})
+
+
+
+EVADE:AddButton({
+	Name = "Darkrai-X Evade script",
+	Callback = function()
+        loadstring(game: HttpGet('https://raw.githubusercontent.com/GamingScripter/Darkrai-X/main/Games/Evade'))()
+end
+})
+
+-------------evade end---------------
+
+-------------race clicker start---------------
+
+local Race = Window:MakeTab({
+	Name = "Race Clicker",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+local Section = Race:AddSection({
+	Name = "Race Clicker Scripts"
+})
+
+
+
+Race:AddButton({
+	Name = "Race Clicker",
+	Callback = function()
+        loadstring(game:HttpGet(('https://raw.githubusercontent.com/Saaakai/Random-Roblox-Script/main/Race%20Clicker')))()
+end
+})
+
+-------------race clicker end---------------
+
+-------------blox fruit start---------------
+
+
+local Blox = Window:MakeTab({
+	Name = "Blox Fruit",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+local Section = Blox:AddSection({
+	Name = "Blox Fruit Scripts"
+})
+
+
+
+Blox:AddButton({
+	Name = "Space Hub",
+	Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Lucasfin000/SpaceHub/main/SpaceHubLoader"))()
+end
+})
+
+
+
+Blox:AddButton({
+	Name = "Blox Fruit Script Op",
+	Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Fiend1sh/FiendMain/main/FiendMainLoader", true))()
+end
+})
+
+
+
+Blox:AddButton({
+	Name = "Blox Fruit Maru",
+	Callback = function()
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/joi-droid/MaruHubBF/main/GOHANSSJ3'))()
+end
+})
+
+-------------blox fruit end---------------
+
+-------------mm2 start---------------
+
+
+local MM = Window:MakeTab({
+	Name = "Murder Myster 2",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+local Section = MM:AddSection({
+	Name = "Murder Myster 2 Scripts"
+})
+
+
+
+MM:AddButton({
+	Name = "DreadzHub2",
+	Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/DreadzHub2/DreadzHub-Scripts-FR/main/Loader"))()
+end
+})
+
+
+
+MM:AddButton({
+	Name = "yynike",
+	Callback = function()
+        loadstring(game:GetObjects("rbxassetid://4001118261")[1].Source)()
+end
+})
+
+
+
+MM:AddButton({
+	Name = "OwlHub",
+	Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/CriShoux/OwlHub/master/OwlHub.txt"))();
+end
+})
+
+
+MM:AddButton({
+	Name = "Chiezzy Hub",
+	Callback = function()
+        loadstring(game:HttpGet("https://pastebin.com/raw/zAuR0JUT"))()
+end
+})
+
+-------------mm2 end---------------
+
+-------------brookheaven start---------------
+
+local BH = Window:MakeTab({
+	Name = "BrookHaven Rp",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+local Section = BH:AddSection({
+	Name = "Brookhaven rp Scripts"
+})
+
+
+
+BH:AddButton({
+	Name = "Ice Hub",
+	Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/IceMael7/NewIceHub/main/Brookhaven"))()
+end
+})
+
+-------------brook heaven end ---------------
+
+-------------prison life start---------------
+
+local PL = Window:MakeTab({
+	Name = "PRISON LIFE",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+local Section = PL:AddSection({
+	Name = "PRISON LIFE Scripts"
+})
+
+
+
+PL:AddButton({
+	Name = "OP - PRISON LIFE SCRIPT",
+	Callback = function()
+        loadstring(game: HttpGet('https://pastebin.com/raw/VUzUCJGf'))()
+end
+})
+
+
+
+
+PL:AddButton({
+	Name = "OP - PRISON LIFE SCRIPT SUPER OP",
+	Callback = function()
+        loadstring(game: HttpGet('https://raw.githubusercontent.com/XTheMasterX/Scripts/Main/PrisonLife'))()
+end
+})
+
+-------------prison life end---------------
+
+-------------doors start---------------
+
+local DR = Window:MakeTab({
+	Name = "Doors",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+local Section = DR:AddSection({
+	Name = "Doors Scripts"
+})
+
+
+
+DR:AddButton({
+	Name = "Doors SCRIPT",
+	Callback = function()
+        loadstring(game: HttpGet('https://pastebin.com/raw/wm4eQSUQ'))()
+end
+})
+
+-------------doors end-------------
+
+
+-------------player start---------------
+
+local PR = Window:MakeTab({
+	Name = "PLAYER",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+local Section = PR:AddSection({
+	Name = "PLAYER Scripts"
+})
+
+
+
+PR:AddSlider({
+	Name = "Speed Set",
+	Min = 0,
+	Max = 300,
+	Default = 16,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 1,
+	ValueName = "Speed",
+	Callback = function(s)
+        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = s
+	end    
+})
+
+-------------player end---------------
+
+
+-------------Misc start---------------
+local Misc = Window:MakeTab({
+	Name = "Misc",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+local Section = Misc:AddSection({
+	Name = "Anti kick"
+})
+
+Misc:AddButton({
+	Name = "Anti Kick",
+	Description = "stops local scripts from kicking you",
+	Callback = function()
+		local mt = getrawmetatable(game)
+
+		setreadonly(mt, false)
+
+		local oldmt = mt.__namecall
+
+		mt.__namecall = newcclosure(function(Self, ...)
+
+
+		local method = getnamecallmethod()
+
+		if method == 'Kick' then
+		
+			print("Tried To kick")
+			wait(9e9)
+			return nil
+
+		end
+
+		return oldmt(Self, ...)
+
+		end)
+
+		setreadonly(mt, true)
+	end
+})
+
+-------------misc end---------------
+
+-------------settings start---------------
+
+local ST = Window:MakeTab({
+	Name = "Settings",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+local Section = ST:AddSection({
+	Name = "Settings"
+})
+
+
+-------------settings end---------------
