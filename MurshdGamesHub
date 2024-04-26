@@ -7245,3 +7245,42 @@ local Section = ST:AddSection({
 	Name = "Settings"
 })
 
+
+
+
+ST:AddButton({
+	Name = "Save Game {Saves game MUST HAVE saveinstance()}",
+	Callback = function()
+		local SSSSSS = ""
+		if identifyexecutor then
+			SSSSSS = select(1, identifyexecutor())
+		end
+		if SSSSSS == "Krampus" then
+			saveplace({
+				FileName = "MurshdHubSavedGame",
+				CopyToClipboard = true
+			})
+			return
+		end
+		if saveplace then
+			saveplace({
+				FileName = "MurshdHubSavedGame"
+			})
+		end
+		if saveinstance then
+			saveinstance()
+		else
+			Library.Notify("Your executor doesnt have a saveinstance() function try Save Game 2", "", 10)
+		end
+	end
+})
+
+
+ST:AddButton({
+	Name = "Save Game {Saves game dont need saveinstance()}",
+	Callback = function()
+		getgenv().saveinstance = nil
+		loadstring(game:HttpGet("https://github.com/MuhXd/Roblox-mobile-script/blob/main/Arecus-X-Neo/Saveinstance.lua?raw=true"))();
+	end
+})
+-------------settings end---------------
