@@ -533,21 +533,8 @@ GUIS:AddButton({
         end)
         end
         coroutine.wrap(ICEIM_fake_script)()
-        local function XOEAVM_fake_script() -- RUN.RGB_Script 
+        local function XOEAVM_fake_script() 
         local script = Instance.new('LocalScript', RUN)
-
-        -- Made By Auradomix --
-        -- Visit My Channel On YT and Twitch = @Auradomix
-        
-        -- PUT "RGB_GUI" ON STARTERGUI
-        -- PUT THIS ON ANY FRAME OR BUTTON OR BOX OR ...
-        -- ONLY ADAPTED FOR GUI, Please Referance To my Other Model For Brick
-        
-        -- Local Script = Client
-        -- Script = Server
-        
-        -- For more fast Server Put them as a Local Scrpit for Gui
-        
         while wait() do
         script.Parent.BackgroundColor3 = Color3.new(255/255,0/255,0/255)
         for i = 0,255,10 do
@@ -577,21 +564,8 @@ GUIS:AddButton({
         end
         end
         coroutine.wrap(XOEAVM_fake_script)()
-        local function WMHNT_fake_script() -- Frame.RGB_Script 
+        local function WMHNT_fake_script() 
         local script = Instance.new('LocalScript', Frame)
-
-        -- Made By Auradomix --
-        -- Visit My Channel On YT and Twitch = @Auradomix
-        
-        -- PUT "RGB_GUI" ON STARTERGUI
-        -- PUT THIS ON ANY FRAME OR BUTTON OR BOX OR ...
-        -- ONLY ADAPTED FOR GUI, Please Referance To my Other Model For Brick
-        
-        -- Local Script = Client
-        -- Script = Server
-        
-        -- For more fast Server Put them as a Local Scrpit for Gui
-        
         while wait() do
         script.Parent.BackgroundColor3 = Color3.new(255/255,0/255,0/255)
         for i = 0,255,10 do
@@ -7317,7 +7291,7 @@ local Section = ST:AddSection({
 
 
 
-CreditsTab:AddParagraph("How to Save the game??","After save the game to find the savedplace file you have to go to executer file you are using then go to Workspace folder then you will find a file named MurshdHubSavedGame and open it and you will find the place ! , if you didin`t see the MurshdHubSavedGame thats mean your executer is not supported!)
+ST:AddParagraph("How to Save the game??","After save the game to find the savedplace file you have to go to executer file you are using then go to Workspace folder then you will find a file named MurshdHubSavedGame and open it and you will find the place ! , if you didin`t see the MurshdHubSavedGame thats mean your executer is not supported!)
 
 
 ST:AddButton({
