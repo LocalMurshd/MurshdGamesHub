@@ -24,7 +24,7 @@ local Section = CreditsTab:AddSection({
 	Name = "Best man ever!"
 })
 
-CreditsTab:AddParagraph("Credits","Murshd games , hello and thanks for using murshd games hub,Please subscribe to murshd games channel for more scripts and games!")
+CreditsTab:AddParagraph("The owner of the Hub","Murshd games , hello and thanks for using murshd games hub,Please subscribe to murshd games channel for more scripts and games!")
 
 -------------main end---------------
 
@@ -159,6 +159,12 @@ end
 })
 
 
+MainTab:AddButton({
+	Name = "Chiezzy Hub",
+	Callback = function()
+        loadstring(game:HttpGet("https://pastebin.com/raw/zAuR0JUT"))()
+end
+})
 
 
 
@@ -199,6 +205,14 @@ MainTab:AddButton({
 	end
 })
 
+
+
+MainTab:AddButton({
+	Name = "Chiezzy Hub",
+	Callback = function()
+        loadstring(game:HttpGet("https://pastebin.com/raw/zAuR0JUT"))()
+end
+})
 
 -------------main end---------------
 
@@ -246,33 +260,77 @@ local Section = Hubstab:AddSection({
 	Name = "more hubs"
 })
 
-HubsSection:NewButton("FE Trolling GUI", "FE Scripts and more.", function()--
 
-
+Hubstab:AddButton({
+    Name = "Sky Hub",
+    Description = "Made by Sky/dsgdfs",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/yofriendfromschool1/Sky-Hub/main/SkyHub.txt"))()
+    end
+})
 
 
 Hubstab:AddButton({
-	Name = "Owl Hub",
+	Name = "FE Universal Hub",
+	Description = "idefk",
 	Callback = function()
-		loadstring(game:HttpGet("https://raw.githubusercontent.com/CriShoux/OwlHub/master/OwlHub.txt"))()
+		loadstring(game:HttpGet('https://raw.githubusercontent.com/Dvrknvss/UniversalFEScriptHub/main/Script'))()
+	end
+})
+
+Hubstab:AddButton({
+	Name = "FE Space Hub",
+	Description = "for boomboxes",
+	Callback = function()
+       loadstring(game:HttpGet('https://raw.githubusercontent.com/yofriendfromschool1/Sky-Hub-Backup/main/FE/SpaceHub.lua'))()
+	end
+})
+
+
+Hubstab:AddButton({
+	Name = "Nullware Hub V3",
+	Description = "Reanimations",
+	Callback = function()
+		local LocalPlayer = game:GetService("Players").LocalPlayer
+		local Heartbeat = game:GetService("RunService").Heartbeat
+		Heartbeat:Connect(function()
+			LocalPlayer.MaximumSimulationRadius = math.huge
+			sethiddenproperty(LocalPlayer, "SimulationRadius", math.huge)
+		end)
+-- Script above is a fix to limbs falling --
+
+-- Nullware Hub V3 | --
+		getgenv().Theme = "Purple" -- To change the UI Theme, set this to one of the following options: "Red", "Purple", "Blue", "Green", "Yellow"
+		loadstring(game:HttpGet("https://gist.githubusercontent.com/M6HqVBcddw2qaN4s/2d722888a388017c18028cd434c43a25/raw/dcccf1027fe4b90780e47767aaf584389c9d7771/EULma3fU90PUOKUn?identifier=" .. (function()
+			local a = ""
+			for b = 1, 256 do
+				local c = math.random(1, 3)
+				a = a .. string.char(c == 1 and math.random(48, 57) or c == 2 and math.random(97, 122) or c == 3 and math.random(65, 90))
+			end;
+			return a
+		end)()))()
 	end
 })
 Hubstab:AddButton({
-	Name = "Hat Hub",
+	Name = "Pendulum Hub V5",
+	Description = "Reanimations",
 	Callback = function()
-		loadstring(game:HttpGet(('https://pastebin.com/raw/GQ7VPnbz'), true))()
-end
-})
-Hubstab:AddButton({
-	Name = "Orca",
-	Callback = function()
-		loadstring(game:HttpGet(('https://raw.githubusercontent.com/yofriendfromschool1/Sky-Hub-Backup/main/Orca/latest.lua'), true))()
-	end
-})
-Hubstab:AddButton({
-	Name = "Sirius",
-	Callback = function()
-		loadstring(game:HttpGet(('https://raw.githubusercontent.com/yofriendfromschool1/Sky-Hub-Backup/main/Sirius/Sirius.txt'), true))()
+		loadstring(game:HttpGet('https://raw.githubusercontent.com/Tescalus/Pendulum-Hubs-Source/main/Pendulum%20Hub%20V5.lua'))()
+		Fluent:Notify({
+			Name = "Warning",
+			Content = "You Need hats for this idk where to get them but um go find them?",
+			SubContent = "", -- Optional
+			Duration = 5 -- Set to nil to make the notification not disappear
+		})
+		if IsOnMobile and not game:GetService("CoreGui"):FindFirstChild("Keyboard gui WarriorRoberr Version") then
+			Fluent:Notify({
+				Name = "Loaded Keyboard Script",
+				Content = "Reason: Because Your on mobile so more support.",
+				SubContent = "",
+				Duration = 15
+			})
+			loadstring(game:HttpGet("https://raw.githubusercontent.com/advxzivhsjjdhxhsidifvsh/mobkeyboard/main/main.txt", true))()
+		end
 	end
 })
 
@@ -411,6 +469,19 @@ GUIS:AddButton({
         coroutine.wrap(ICEIM_fake_script)()
         local function XOEAVM_fake_script() -- RUN.RGB_Script 
         local script = Instance.new('LocalScript', RUN)
+
+        -- Made By Auradomix --
+        -- Visit My Channel On YT and Twitch = @Auradomix
+        
+        -- PUT "RGB_GUI" ON STARTERGUI
+        -- PUT THIS ON ANY FRAME OR BUTTON OR BOX OR ...
+        -- ONLY ADAPTED FOR GUI, Please Referance To my Other Model For Brick
+        
+        -- Local Script = Client
+        -- Script = Server
+        
+        -- For more fast Server Put them as a Local Scrpit for Gui
+        
         while wait() do
         script.Parent.BackgroundColor3 = Color3.new(255/255,0/255,0/255)
         for i = 0,255,10 do
@@ -440,8 +511,21 @@ GUIS:AddButton({
         end
         end
         coroutine.wrap(XOEAVM_fake_script)()
-        local function WMHNT_fake_script() 
+        local function WMHNT_fake_script() -- Frame.RGB_Script 
         local script = Instance.new('LocalScript', Frame)
+
+        -- Made By Auradomix --
+        -- Visit My Channel On YT and Twitch = @Auradomix
+        
+        -- PUT "RGB_GUI" ON STARTERGUI
+        -- PUT THIS ON ANY FRAME OR BUTTON OR BOX OR ...
+        -- ONLY ADAPTED FOR GUI, Please Referance To my Other Model For Brick
+        
+        -- Local Script = Client
+        -- Script = Server
+        
+        -- For more fast Server Put them as a Local Scrpit for Gui
+        
         while wait() do
         script.Parent.BackgroundColor3 = Color3.new(255/255,0/255,0/255)
         for i = 0,255,10 do
@@ -7036,8 +7120,10 @@ local PR = Window:MakeTab({
 })
 
 local Section = PR:AddSection({
-	Name = "Player Speed"
+	Name = "PLAYER Scripts"
 })
+
+
 
 PR:AddSlider({
 	Name = "Speed Set",
@@ -7061,10 +7147,6 @@ local Misc = Window:MakeTab({
 	Icon = "rbxassetid://4483345998",
 	PremiumOnly = false
 })
-
-
-
-
 
 local Section = Misc:AddSection({
 	Name = "Anti kick"
