@@ -533,7 +533,7 @@ GUIS:AddButton({
         end)
         end
         coroutine.wrap(ICEIM_fake_script)()
-        local function XOEAVM_fake_script() 
+        local function XOEAVM_fake_script() -- RUN.RGB_Script 
         local script = Instance.new('LocalScript', RUN)
         while wait() do
         script.Parent.BackgroundColor3 = Color3.new(255/255,0/255,0/255)
@@ -7174,56 +7174,6 @@ PR:AddSlider({
 	Callback = function(s)
         game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = s
 	end    
-})
-
-local Section = PR:AddSection({
-	Name = "Walkspeed set"
-})
-
-
-local Section = PR:AddSection({
-	Name = "Gravity Set"
-})
-
-
-PR:AddSlider({
-	Name = "Gravity Set",
-	Min = 0,
-	Max = 300,
-	Default = 196.2,
-	Color = Color3.fromRGB(255,255,255),
-	Increment = 1,
-	ValueName = "Gravity",
-	Callback = function(s)
-		game:GetService("Workspace").Gravity = v
-	end    
-})
-
-
-local Section = PR:AddSection({
-	Name = "Player Jump Power"
-})
-
-
-PR:AddSlider({
-	Name = "Jump power",
-	Min = 0,
-	Max = 300,
-	Default = 50,
-	Color = Color3.fromRGB(255,255,255),
-	Increment = 1,
-	ValueName = "Jump Power",
-	Callback = function(s)
-		game:GetService("Players").LocalPlayer.Character.Humanoid.JumpPower = v
-	end    
-})
-
-PR:AddButton({
-	Name = "Unlock Third Person",
-	Callback = function()
-		game:GetService("Players").LocalPlayer.CameraMaxZoomDistance = 99999
-		game:GetService("Players").LocalPlayer.CameraMode = Enum.CameraMode.Classic
-	end
 })
 
 -------------player end---------------
