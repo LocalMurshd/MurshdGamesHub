@@ -7142,25 +7142,6 @@ local Section = PR:AddSection({
 
 
 local Section = PR:AddSection({
-	Name = "Gravity Set"
-})
-
-
-PR:AddSlider({
-	Name = "Gravity Set",
-	Min = 0,
-	Max = 300,
-	Default = 196.2,
-	Color = Color3.fromRGB(255,255,255),
-	Increment = 1,
-	ValueName = "Gravity",
-	Callback = function(s)
-		game:GetService("Workspace").Gravity = v
-	end    
-})
-
-
-local Section = PR:AddSection({
 	Name = "Player Jump Power"
 })
 
