@@ -24,7 +24,7 @@ local Section = CreditsTab:AddSection({
 	Name = "Best man ever!"
 })
 
-CreditsTab:AddParagraph("The owner of the Hub","Murshd games , hello and thanks for using murshd games hub,Please subscribe to murshd games channel for more scripts and games!")
+CreditsTab:AddParagraph("Credits","Murshd games , hello and thanks for using murshd games hub,Please subscribe to murshd games channel for more scripts and games!")
 
 -------------main end---------------
 
@@ -159,12 +159,6 @@ end
 })
 
 
-MainTab:AddButton({
-	Name = "Chiezzy Hub",
-	Callback = function()
-        loadstring(game:HttpGet("https://pastebin.com/raw/zAuR0JUT"))()
-end
-})
 
 
 
@@ -205,14 +199,6 @@ MainTab:AddButton({
 	end
 })
 
-
-
-MainTab:AddButton({
-	Name = "Chiezzy Hub",
-	Callback = function()
-        loadstring(game:HttpGet("https://pastebin.com/raw/zAuR0JUT"))()
-end
-})
 
 -------------main end---------------
 
@@ -260,12 +246,95 @@ local Section = Hubstab:AddSection({
 	Name = "more hubs"
 })
 
+HubsSection:NewButton("FE Trolling GUI", "FE Scripts and more.", function()--
+
+
+
+
+Hubstab:AddButton({
+	Name = "Owl Hub",
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/CriShoux/OwlHub/master/OwlHub.txt"))()
+	end
+})
+Hubstab:AddButton({
+	Name = "Hat Hub",
+	Callback = function()
+		loadstring(game:HttpGet(('https://pastebin.com/raw/GQ7VPnbz'), true))()
+end
+})
+Hubstab:AddButton({
+	Name = "Orca",
+	Callback = function()
+		loadstring(game:HttpGet(('https://raw.githubusercontent.com/yofriendfromschool1/Sky-Hub-Backup/main/Orca/latest.lua'), true))()
+	end
+})
+Hubstab:AddButton({
+	Name = "Sirius",
+	Callback = function()
+		loadstring(game:HttpGet(('https://raw.githubusercontent.com/yofriendfromschool1/Sky-Hub-Backup/main/Sirius/Sirius.txt'), true))()
+	end
+})
+Hubstab:AddButton({
+	Name = "Ezhub",
+	Callback = function()
+		loadstring(game:HttpGet(('https://raw.githubusercontent.com/debug420/Ez-Industries-Launcher-Data/master/Launcher.lua'), true))()--
+	end
+})
+Hubstab:AddButton({
+	Name = "Psyhub",
+	Callback = function()
+		loadstring(game:GetObjects("rbxassetid://3014051754")[1].Source)()
+end
+})
+Hubstab:AddButton({
+	Name = "Hoho Hub",
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/acsu123/HohoV2/main/ScriptLoad.lua"))()
+	end
+})
+Hubstab:AddButton({
+	Name = "FE Trolling GUI",
+	Callback = function()
+		loadstring(game:HttpGet(('https://raw.githubusercontent.com/yofriendfromschool1/Sky-Hub/main/FE%20Trolling%20GUI.luau'), true))()
+	end
+})
+Hubstab:AddButton({
+	Name = "Chiezzy",
+	Callback = function()
+      loadstring(game:HttpGet("https://pastebin.com/raw/zAuR0JUT"))()
+	end
+})
+
+Hubstab:AddButton({
+	Name = "Frozen Hub",
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/FrozenScripts/frozenhubb/main/frozen777", true))()
+	end
+})
+
+Hubstab:AddButton({
+	Name = "Hydro Hub",
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/FRX397/Hydrohub/main/Hydro_hub", true))()
+	end
+})
+
+
 
 Hubstab:AddButton({
     Name = "Sky Hub",
     Description = "Made by Sky/dsgdfs",
     Callback = function()
         loadstring(game:HttpGet("https://raw.githubusercontent.com/yofriendfromschool1/Sky-Hub/main/SkyHub.txt"))()
+    end
+})
+
+Hubstab:AddButton({
+    Name = "V.G Hub",
+    Description = "Made by Sky/dsgdfs",
+    Callback = function()
+		loadstring(game:HttpGet('https://raw.githubusercontent.com/1201for/V.G-Hub/main/V.Ghub'))()
     end
 })
 
@@ -297,10 +366,7 @@ Hubstab:AddButton({
 			LocalPlayer.MaximumSimulationRadius = math.huge
 			sethiddenproperty(LocalPlayer, "SimulationRadius", math.huge)
 		end)
--- Script above is a fix to limbs falling --
-
--- Nullware Hub V3 | --
-		getgenv().Theme = "Purple" -- To change the UI Theme, set this to one of the following options: "Red", "Purple", "Blue", "Green", "Yellow"
+		getgenv().Theme = "Blue" -- To change the UI Theme, set this to one of the following options: "Red", "Purple", "Blue", "Green", "Yellow"
 		loadstring(game:HttpGet("https://gist.githubusercontent.com/M6HqVBcddw2qaN4s/2d722888a388017c18028cd434c43a25/raw/dcccf1027fe4b90780e47767aaf584389c9d7771/EULma3fU90PUOKUn?identifier=" .. (function()
 			local a = ""
 			for b = 1, 256 do
@@ -7120,10 +7186,8 @@ local PR = Window:MakeTab({
 })
 
 local Section = PR:AddSection({
-	Name = "PLAYER Scripts"
+	Name = "Player Speed"
 })
-
-
 
 PR:AddSlider({
 	Name = "Speed Set",
@@ -7138,6 +7202,56 @@ PR:AddSlider({
 	end    
 })
 
+local Section = PR:AddSection({
+	Name = "Walkspeed set"
+})
+
+
+local Section = PR:AddSection({
+	Name = "Gravity Set"
+})
+
+
+PR:AddSlider({
+	Name = "Gravity Set",
+	Min = 0,
+	Max = 300,
+	Default = 196.2,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 1,
+	ValueName = "Gravity",
+	Callback = function(s)
+		game:GetService("Workspace").Gravity = v
+	end    
+})
+
+
+local Section = PR:AddSection({
+	Name = "Player Jump Power"
+})
+
+
+PR:AddSlider({
+	Name = "Jump power",
+	Min = 0,
+	Max = 300,
+	Default = 50,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 1,
+	ValueName = "Jump Power",
+	Callback = function(s)
+		game:GetService("Players").LocalPlayer.Character.Humanoid.JumpPower = v
+	end    
+})
+
+PR:AddButton({
+	Name = "Unlock Third Person",
+	Callback = function()
+		game:GetService("Players").LocalPlayer.CameraMaxZoomDistance = 99999
+		game:GetService("Players").LocalPlayer.CameraMode = Enum.CameraMode.Classic
+	end
+})
+
 -------------player end---------------
 
 
@@ -7147,6 +7261,10 @@ local Misc = Window:MakeTab({
 	Icon = "rbxassetid://4483345998",
 	PremiumOnly = false
 })
+
+
+
+
 
 local Section = Misc:AddSection({
 	Name = "Anti kick"
@@ -7198,4 +7316,43 @@ local Section = ST:AddSection({
 })
 
 
+
+CreditsTab:AddParagraph("How to Save the game??","After save the game to find the savedplace file you have to go to executer file you are using then go to Workspace folder then you will find a file named MurshdHubSavedGame and open it and you will find the place ! , if you didin`t see the MurshdHubSavedGame thats mean your executer is not supported!)
+
+
+ST:AddButton({
+	Name = "Save Game {Saves game MUST HAVE saveinstance()}",
+	Callback = function()
+		local SSSSSS = ""
+		if identifyexecutor then
+			SSSSSS = select(1, identifyexecutor())
+		end
+		if SSSSSS == "Krampus" then
+			saveplace({
+				FileName = "MurshdHubSavedGame",
+				CopyToClipboard = true
+			})
+			return
+		end
+		if saveplace then
+			saveplace({
+				FileName = "MurshdHubSavedGame"
+			})
+		end
+		if saveinstance then
+			saveinstance()
+		else
+			Library.Notify("Your executor doesnt have a saveinstance() function try Save Game 2", "", 10)
+		end
+	end
+})
+
+
+ST:AddButton({
+	Name = "Save Game {Saves game dont need saveinstance()}",
+	Callback = function()
+		getgenv().saveinstance = nil
+		loadstring(game:HttpGet("https://github.com/MuhXd/Roblox-mobile-script/blob/main/Arecus-X-Neo/Saveinstance.lua?raw=true"))();
+	end
+})
 -------------settings end---------------
