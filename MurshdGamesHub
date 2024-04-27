@@ -1,5 +1,5 @@
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
-local Window = OrionLib:MakeWindow({Name = "Murshd Games Hub", HidePremium = false, IntroText = "loud Murshd Hub", SaveConfig = true, ConfigFolder = "Murshd Games Saves"})
+local Window = OrionLib:MakeWindow({Name = "Murshd Games Hub", HidePremium = false, IntroText = "Loading Murshd Hub", SaveConfig = true, ConfigFolder = "Murshd Games Saves"})
 
 OrionLib:MakeNotification({
 	Name = "Hey Bro!,Thanks for using Murshd Games Hub",
@@ -260,10 +260,6 @@ local Section = Hubstab:AddSection({
 	Name = "more hubs"
 })
 
-HubsSection:NewButton("FE Trolling GUI", "FE Scripts and more.", function()--
-
-
-
 
 Hubstab:AddButton({
 	Name = "Owl Hub",
@@ -396,21 +392,6 @@ Hubstab:AddButton({
 	Description = "Reanimations",
 	Callback = function()
 		loadstring(game:HttpGet('https://raw.githubusercontent.com/Tescalus/Pendulum-Hubs-Source/main/Pendulum%20Hub%20V5.lua'))()
-		Fluent:Notify({
-			Name = "Warning",
-			Content = "You Need hats for this idk where to get them but um go find them?",
-			SubContent = "", -- Optional
-			Duration = 5 -- Set to nil to make the notification not disappear
-		})
-		if IsOnMobile and not game:GetService("CoreGui"):FindFirstChild("Keyboard gui WarriorRoberr Version") then
-			Fluent:Notify({
-				Name = "Loaded Keyboard Script",
-				Content = "Reason: Because Your on mobile so more support.",
-				SubContent = "",
-				Duration = 15
-			})
-			loadstring(game:HttpGet("https://raw.githubusercontent.com/advxzivhsjjdhxhsidifvsh/mobkeyboard/main/main.txt", true))()
-		end
 	end
 })
 
