@@ -104,7 +104,8 @@ MainTab:AddButton({
 					task.wait()
 				end
 		end
-		end)
+	end)
+end
 })
 
 
