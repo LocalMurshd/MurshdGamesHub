@@ -62,62 +62,51 @@ MainTab:AddButton({
 	Name = "esp",
 	Description = "joins smallest server",
 	Callback = function()
-		local Players = game:GetService("Players"):GetPlayers()
-		local RunService = game:GetService("RunService")
-		
-		-- Function to create a custom highlight effect for a player's character
-		local function createCustomHighlight(player)
-			-- Check if the player exists and has a character
-			if player and player.Character then
-				-- Create a part to serve as the highlight effect
-				local highlightPart = Instance.new("Part")
-				highlightPart.Name = "CustomHighlight"
-				highlightPart.Transparency = 1
-				highlightPart.Size = Vector3.new(10, 1, 10) -- Adjust size as needed
-				highlightPart.Color = Color3.new(1, 1, 1) -- White color
-				highlightPart.Anchored = true
-				highlightPart.CanCollide = false
-				highlightPart.Parent = player.Character
-		
-				-- Attach a BillboardGui to the highlight part
-				local billboardGui = Instance.new("BillboardGui")
-				billboardGui.Name = "CustomHighlightGui"
-				billboardGui.AlwaysOnTop = true
-				billboardGui.Size = UDim2.new(1, 0, 1, 0)
-				billboardGui.Parent = highlightPart
-		
-				-- Create a TextLabel to display the highlight
-				local textLabel = Instance.new("TextLabel")
-				textLabel.Text = player.Name
-				textLabel.Size = UDim2.new(1, 0, 1, 0)
-				textLabel.BackgroundTransparency = 1
-				textLabel.TextColor3 = Color3.new(1, 1, 1) -- White color
-				textLabel.TextStrokeTransparency = 0
-				textLabel.TextStrokeColor3 = Color3.new(0, 0, 0) -- Black stroke color for better visibility
-				textLabel.TextScaled = true
-				textLabel.Parent = billboardGui
-		
-				-- Update the highlight position continuously
-				RunService.RenderStepped:Connect(function()
-					if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
-						highlightPart.Position = player.Character.HumanoidRootPart.Position + Vector3.new(0, 3, 0) -- Offset to position above the player's head
-					end
-				end)
-			end
-		end
-		
-		-- Function to create custom highlights for all players in the game
-		local function createCustomHighlightsForAllPlayers()
-			for _, player in ipairs(Players) do
-				createCustomHighlight(player)
-			end
-		
-			game.Players.PlayerAdded:Connect(createCustomHighlight)
-		end
-		
-		-- Call the function to create custom highlights for all players when the script runs
-		createCustomHighlightsForAllPlayers()
-		
+-- Function to create a custom highlight effect for a player's character
+local function createCustomHighlight(player)
+    -- Check if the player exists and has a character
+    if player and player.Character then
+        -- Create a folder to hold the highlight parts
+        local highlightFolder = Instance.new("Folder")
+        highlightFolder.Name = "CustomHighlight"
+        highlightFolder.Parent = player.Character
+
+        -- Function to create a highlight part for a given character part
+        local function createHighlightPart(part)
+            local highlightPart = Instance.new("Part")
+            highlightPart.Name = "HighlightPart"
+            highlightPart.Transparency = 0.5
+            highlightPart.Color = Color3.fromRGB(0, 0, 255) -- Blue color
+            highlightPart.Material = Enum.Material.ForceField
+            highlightPart.Size = part.Size + Vector3.new(0.1, 0.1, 0.1) -- Slightly larger than original size
+            highlightPart.Position = part.Position
+            highlightPart.Anchored = true
+            highlightPart.CanCollide = false
+            highlightPart.Parent = highlightFolder
+        end
+
+        -- Create highlight parts for all parts of the player's character
+        for _, part in ipairs(player.Character:GetDescendants()) do
+            if part:IsA("BasePart") then
+                createHighlightPart(part)
+            end
+        end
+    end
+end
+
+-- Function to create custom highlights for all players in the game
+local function createCustomHighlightsForAllPlayers()
+    local players = game:GetService("Players"):GetPlayers()
+    for _, player in ipairs(players) do
+        createCustomHighlight(player)
+    end
+
+    game.Players.PlayerAdded:Connect(createCustomHighlight)
+end
+
+-- Call the function to create custom highlights for all players when the script runs
+createCustomHighlightsForAllPlayers()
+
 	end
 })
 
