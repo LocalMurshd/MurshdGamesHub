@@ -61,48 +61,6 @@ MainTab:AddToggle({
 	Name = "Esp",
 	Default = false,
 	Callback = function(Value)
-		-- Function to create an outline stroke for a player's body
-local function createOutline(player)
-    -- Check if the player exists and is valid
-    if player and player.Character then
-        -- Create an outline part for each part of the player's character
-        for _, part in ipairs(player.Character:GetDescendants()) do
-            if part:IsA("BasePart") then
-                -- Create a copy of the part to serve as the outline stroke
-                local outlineStroke = part:Clone()
-                outlineStroke.Name = "OutlineStroke"
-                
-                -- Set the properties of the outline stroke
-                outlineStroke.Transparency = 0.5
-                outlineStroke.Color = Color3.new(1, 0, 0) -- Red color
-                outlineStroke.Material = Enum.Material.Neon
-                
-                -- Parent the outline stroke to the player's character
-                outlineStroke.Parent = player.Character
-                
-                -- Make the outline stroke slightly larger than the original part
-                local outlineOffset = Vector3.new(0.1, 0.1, 0.1) -- Adjust as needed
-                outlineStroke.Size = part.Size + outlineOffset
-                outlineStroke.Position = part.Position
-            end
-        end
-    end
-end
-
--- Function to create outline strokes for all players in the game
-local function createOutlineStrokesForAllPlayers()
-    -- Get all players in the game
-    local players = game:GetService("Players"):GetPlayers()
-
-    -- Loop through each player and create an outline stroke
-    for _, player in ipairs(players) do
-        createOutline(player)
-    end
-end
-
--- Call the function to create outline strokes for all players when the script runs
-createOutlineStrokesForAllPlayers()
-
     end
 })
 
@@ -110,43 +68,6 @@ MainTab:AddToggle({
 	Name = "Tracers",
 	Default = false,
 	Callback = function(Value)
-		-- Create a ScreenGui to hold the lines
-local lineGui = Instance.new("ScreenGui")
-lineGui.Name = "Lines"
-lineGui.Parent = game:GetService("CoreGui")
-
--- Function to create lines from players' heads to the bottom of the screen
-local function createLines()
-    -- Get the current camera
-    local camera = game.Workspace.CurrentCamera
-    
-    -- Get all players in the game
-    local players = game:GetService("Players"):GetPlayers()
-
-    -- Loop through each player and create a line
-    for _, player in ipairs(players) do
-        -- Check if the player has a character and it's visible
-        if player.Character and player.Character:FindFirstChild("Head") then
-            -- Calculate the position of the player's head in screen space
-            local headPosition = player.Character.Head.Position
-            local screenPosition = camera:WorldToViewportPoint(headPosition)
-
-            -- Create the line
-            local line = Instance.new("Frame")
-            line.Name = "Line"
-            line.BackgroundColor3 = Color3.new(1, 1, 1)  -- White color
-            line.BorderSizePixel = 0
-            line.Size = UDim2.new(0, 1, 0, camera.ViewportSize.Y - screenPosition.Y)
-            line.Position = UDim2.new(0, screenPosition.X * camera.ViewportSize.X, 0, screenPosition.Y * camera.ViewportSize.Y)
-            line.Parent = lineGui
-        end
-    end
-end
-
--- Call the function to create lines when the script runs and every frame
-createLines()
-game:GetService("RunService").RenderStepped:Connect(createLines)
-
     end
 })
 
