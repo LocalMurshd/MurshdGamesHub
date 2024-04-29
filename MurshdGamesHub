@@ -57,10 +57,11 @@ MainTab:AddToggle({
 
 
 
-MainTab:AddToggle({
-	Name = "Esp",
-	Default = false,
-	Callback = function(Value)
+
+MainTab:AddButton({
+	Name = "Small server Joiner",
+	Description = "joins smallest server",
+	Callback = function()
 		local Players = game:GetService("Players"):GetChildren()
 		local RunService = game:GetService("RunService")
 		local highlight = Instance.new("Highlight")
@@ -104,15 +105,8 @@ MainTab:AddToggle({
 				end
 		end
 		end)
-    end
 })
 
-MainTab:AddToggle({
-	Name = "Tracers",
-	Default = false,
-	Callback = function(Value)
-    end
-})
 
 
 
