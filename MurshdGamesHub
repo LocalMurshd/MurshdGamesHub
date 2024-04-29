@@ -65,20 +65,39 @@ MainTab:AddToggle({
 local function createOutline(player)
     -- Check if the player exists and is valid
     if player and player.Character then
-        -- Create an outline part for each part of the player's character
-        for _, part in ipairs(player.Character:GetDescendants()) do
-            if part:IsA("BasePart") then
-                local outlinePart = Instance.new("Part")
-                outlinePart.Name = "Outline"
-                outlinePart.Size = part.Size + Vector3.new(0.1, 0.1, 0.1) -- Increase size slightly to create outline effect
-                outlinePart.Position = part.Position
-                outlinePart.Color = Color3.new(1, 0, 0) -- Red color for outline
-                outlinePart.Transparency = 0.5 -- Adjust transparency as needed
-                outlinePart.Anchored = true
-                outlinePart.CanCollide = false
-                outlinePart.Parent = part.Parent
+        -- Function to update the outline parts based on player's current position and size
+        local function updateOutline()
+            -- Check if the player's character still exists
+            if player.Character and player.Character.Parent then
+                -- Remove any existing outline parts
+                for _, existingOutline in ipairs(player.Character:GetChildren()) do
+                    if existingOutline.Name == "Outline" then
+                        existingOutline:Destroy()
+                    end
+                end
+
+                -- Create outline parts for each part of the player's character
+                for _, part in ipairs(player.Character:GetDescendants()) do
+                    if part:IsA("BasePart") then
+                        local outlinePart = Instance.new("Part")
+                        outlinePart.Name = "Outline"
+                        outlinePart.Size = part.Size + Vector3.new(0.1, 0.1, 0.1) -- Increase size slightly to create outline effect
+                        outlinePart.Position = part.Position
+                        outlinePart.Color = Color3.new(1, 0, 0) -- Red color for outline
+                        outlinePart.Transparency = 0.5 -- Adjust transparency as needed
+                        outlinePart.Anchored = true
+                        outlinePart.CanCollide = false
+                        outlinePart.Parent = part.Parent
+                    end
+                end
             end
         end
+
+        -- Call the update function immediately to create the initial outline
+        updateOutline()
+
+        -- Connect a function to the character's child added event to update the outline when new parts are added
+        player.Character.ChildAdded:Connect(updateOutline)
     end
 end
 
@@ -91,6 +110,11 @@ local function createOutlinesForAllPlayers()
     for _, player in ipairs(players) do
         createOutline(player)
     end
+
+    -- Connect a function to the player added event to create outlines for new players
+    game:GetService("Players").PlayerAdded:Connect(function(player)
+        createOutline(player)
+    end)
 end
 
 -- Call the function to create outlines for all players when the script runs
