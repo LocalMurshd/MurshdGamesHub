@@ -61,32 +61,40 @@ MainTab:AddToggle({
 	Name = "Esp",
 	Default = false,
 	Callback = function(Value)
--- Function to create a glowing effect for a player
-local function createGlow(player)
+-- Function to create an outline effect for a player's body
+local function createOutline(player)
     -- Check if the player exists and is valid
     if player and player.Character then
-        -- Create a glowing effect for the player's torso
-        local glow = Instance.new("PointLight")
-        glow.Color = Color3.new(1, 1, 1) -- White color
-        glow.Range = 10
-        glow.Brightness = 5
-        glow.Parent = player.Character:FindFirstChild("Torso") or player.Character.PrimaryPart
+        -- Create an outline part for each part of the player's character
+        for _, part in ipairs(player.Character:GetDescendants()) do
+            if part:IsA("BasePart") then
+                local outlinePart = Instance.new("Part")
+                outlinePart.Name = "Outline"
+                outlinePart.Size = part.Size + Vector3.new(0.1, 0.1, 0.1) -- Increase size slightly to create outline effect
+                outlinePart.Position = part.Position
+                outlinePart.Color = Color3.new(1, 0, 0) -- Red color for outline
+                outlinePart.Transparency = 0.5 -- Adjust transparency as needed
+                outlinePart.Anchored = true
+                outlinePart.CanCollide = false
+                outlinePart.Parent = part.Parent
+            end
+        end
     end
 end
 
--- Function to add glowing effects for all players in the game
-local function addGlowForAllPlayers()
+-- Function to create outlines for all players in the game
+local function createOutlinesForAllPlayers()
     -- Get all players in the game
     local players = game:GetService("Players"):GetPlayers()
 
-    -- Loop through each player and add a glowing effect
+    -- Loop through each player and create an outline effect
     for _, player in ipairs(players) do
-        createGlow(player)
+        createOutline(player)
     end
 end
 
--- Call the function to add glowing effects for all players when the script runs
-addGlowForAllPlayers()
+-- Call the function to create outlines for all players when the script runs
+createOutlinesForAllPlayers()
 
     end
 })
@@ -95,7 +103,7 @@ MainTab:AddToggle({
 	Name = "Tracers",
 	Default = false,
 	Callback = function(Value)
-		-- Function to create tracers from all players to your screen
+-- Function to create tracers from all players to your screen
 local function createTracersToScreen()
     -- Get the current camera
     local camera = game.Workspace.CurrentCamera
@@ -119,8 +127,17 @@ local function createTracersToScreen()
                 tracer.Transparency = 0.5
                 tracer.Visible = true
                 tracer.From = Vector2.new(screenPosition.X, screenPosition.Y)
-                tracer.To = Vector2.new(camera.ViewportSize.X / 2, camera.ViewportSize.Y / 2) -- Draw the line to the center of the screen
                 tracer.Parent = Drawing
+
+                -- Update the tracer position continuously
+                game:GetService("RunService").RenderStepped:Connect(function()
+                    local newScreenPosition, newOnScreen = camera:WorldToScreenPoint(character.PrimaryPart.Position)
+                    if newOnScreen then
+                        tracer.From = Vector2.new(newScreenPosition.X, newScreenPosition.Y)
+                    else
+                        tracer.Visible = false
+                    end
+                end)
             end
         end
     end
