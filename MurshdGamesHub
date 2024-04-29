@@ -57,6 +57,28 @@ MainTab:AddToggle({
 
 
 
+MainTab:AddToggle({
+	Name = "Esp",
+	Default = false,
+	Callback = function(Value)
+		local Players = game:GetService("Players")
+
+		Players.PlayerAdded:Connect(function(player)
+			player.CharacterAdded:Connect(function(character)
+				local bodyColors = character:WaitForChild("Body Colors")
+				bodyColors.HeadColor = BrickColor.new("Really red")
+				bodyColors.LeftArmColor = BrickColor.new("Really red")
+				bodyColors.LeftLegColor = BrickColor.new("Really red")
+				bodyColors.RightArmColor = BrickColor.new("Really red")
+				bodyColors.RightLegColor = BrickColor.new("Really red")
+				bodyColors.TorsoColor = BrickColor.new("Really red")
+			end)
+		end)
+	end    
+})
+
+
+
 MainTab:AddButton({
 	Name = "Small server Joiner",
 	Description = "joins smallest server",
