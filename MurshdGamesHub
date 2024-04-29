@@ -1,5 +1,5 @@
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
-local Window = OrionLib:MakeWindow({Name = "Murshd Games Hub", HidePremium = false, IntroText = "loud Murshd Hub", SaveConfig = true, ConfigFolder = "Murshd Games Saves"})
+local Window = OrionLib:MakeWindow({Name = "Murshd Games Hub", HidePremium = false, IntroText = "Loading Murshd Games Hub", SaveConfig = true, ConfigFolder = "Murshd Games Saves"})
 
 OrionLib:MakeNotification({
 	Name = "Hey Bro!,Thanks for using Murshd Games Hub",
@@ -61,43 +61,32 @@ MainTab:AddToggle({
 	Name = "Esp",
 	Default = false,
 	Callback = function(Value)
-		-- Function to create chams for a specific player
-local function createChams(player)
-    -- Create a BillboardGui to display the player's name
-    local billboardGui = Instance.new("BillboardGui")
-    billboardGui.Name = "Chams"
-    billboardGui.Adornee = player.Character:FindFirstChild("Head") or player.Character:WaitForChild("Head")
-    billboardGui.Size = UDim2.new(2, 0, 2, 0) -- Size of the BillboardGui
-    billboardGui.StudsOffset = Vector3.new(0, 3, 0) -- Offset from the player's head position
-    billboardGui.AlwaysOnTop = true
-    billboardGui.Parent = player.Character.Head
-
-    -- Create a TextLabel to display the player's name
-    local textLabel = Instance.new("TextLabel")
-    textLabel.Name = "Name"
-    textLabel.Size = UDim2.new(1, 0, 1, 0)
-    textLabel.BackgroundTransparency = 1
-    textLabel.TextColor3 = Color3.new(1, 1, 1) -- White color for the text
-    textLabel.TextStrokeTransparency = 0
-    textLabel.TextStrokeColor3 = Color3.new(0, 0, 0) -- Black stroke color for better visibility
-    textLabel.TextScaled = true
-    textLabel.Text = player.Name
-    textLabel.Parent = billboardGui
-end
-
--- Function to create chams for all players in the game
-local function createChamsForAllPlayers()
-    -- Get all players in the game
-    local players = game:GetService("Players"):GetPlayers()
-
-    -- Loop through each player and create chams for them
-    for _, player in ipairs(players) do
-        createChams(player)
+-- Function to create a glowing effect for a player
+local function createGlow(player)
+    -- Check if the player exists and is valid
+    if player and player.Character then
+        -- Create a glowing effect for the player's torso
+        local glow = Instance.new("PointLight")
+        glow.Color = Color3.new(1, 1, 1) -- White color
+        glow.Range = 10
+        glow.Brightness = 5
+        glow.Parent = player.Character:FindFirstChild("Torso") or player.Character.PrimaryPart
     end
 end
 
--- Call the function to create chams for all players when the script runs
-createChamsForAllPlayers()
+-- Function to add glowing effects for all players in the game
+local function addGlowForAllPlayers()
+    -- Get all players in the game
+    local players = game:GetService("Players"):GetPlayers()
+
+    -- Loop through each player and add a glowing effect
+    for _, player in ipairs(players) do
+        createGlow(player)
+    end
+end
+
+-- Call the function to add glowing effects for all players when the script runs
+addGlowForAllPlayers()
 
     end
 })
@@ -106,47 +95,53 @@ MainTab:AddToggle({
 	Name = "Tracers",
 	Default = false,
 	Callback = function(Value)
-		-- Function to create a tracer between two positions for a specific player
-local function createTracer(player, startPosition, endPosition)
-    -- Create a part to represent the tracer
-    local tracerPart = Instance.new("Part")
-    tracerPart.Size = Vector3.new(0.1, (startPosition - endPosition).Magnitude, 0.1) -- Adjust the size based on the distance between positions
-    tracerPart.Position = (startPosition + endPosition) / 2
-    tracerPart.Anchored = true
-    tracerPart.CanCollide = false
-    tracerPart.Material = Enum.Material.Neon
-    tracerPart.Color = Color3.new(1, 0, 0) -- Red color
-    tracerPart.Parent = game.Workspace -- Parent to workspace or another appropriate parent
+		-- Function to create tracers from all players to your screen
+local function createTracersToScreen()
+    -- Get the current camera
+    local camera = game.Workspace.CurrentCamera
 
-    -- Replicate the tracer part to all players except the player who triggered it
-    for _, otherPlayer in ipairs(game.Players:GetPlayers()) do
-        if otherPlayer ~= player then
-            local replicatedPart = tracerPart:Clone()
-            replicatedPart.Parent = otherPlayer.PlayerGui -- Parent to PlayerGui so it's visible to all players
-            replicatedPart.Name = "Tracer" -- Name it to identify and remove later if needed
+    -- Function to create a tracer line from a player to the camera
+    local function createTracerFromPlayer(player)
+        -- Check if the player exists and is valid
+        if player and player.Character then
+            -- Get the player's character and position
+            local character = player.Character
+            local characterPosition = character.PrimaryPart.Position
+
+            -- Calculate the position on the screen
+            local screenPosition, onScreen = camera:WorldToScreenPoint(characterPosition)
+
+            -- Create the tracer line only if the player is on the screen
+            if onScreen then
+                local tracer = Drawing.new("Line")
+                tracer.Color = Color3.new(1, 0, 0) -- Red color
+                tracer.Thickness = 2
+                tracer.Transparency = 0.5
+                tracer.Visible = true
+                tracer.From = Vector2.new(screenPosition.X, screenPosition.Y)
+                tracer.To = Vector2.new(camera.ViewportSize.X / 2, camera.ViewportSize.Y / 2) -- Draw the line to the center of the screen
+                tracer.Parent = Drawing
+            end
         end
     end
 
-    -- Remove the tracer after a certain time (5 seconds in this example)
-    wait(5)
-    tracerPart:Destroy()
-end
+    -- Function to create tracers from all players to the screen
+    local function createTracersFromAllPlayers()
+        -- Get all players in the game
+        local players = game:GetService("Players"):GetPlayers()
 
--- Function to create tracers for all players in the game
-local function createTracersForAllPlayers()
-    -- Get all players in the game
-    local players = game:GetService("Players"):GetPlayers()
-
-    -- Loop through each player and create a tracer for their position to a common point (e.g., the origin)
-    for _, player in ipairs(players) do
-        local startPosition = player.Character and player.Character.PrimaryPart.Position or Vector3.new(0, 0, 0) -- Use the player's position if available
-        local endPosition = Vector3.new(0, 0, 0) -- You can set a common point like the origin
-        createTracer(player, startPosition, endPosition)
+        -- Loop through each player and create a tracer
+        for _, player in ipairs(players) do
+            createTracerFromPlayer(player)
+        end
     end
+
+    -- Call the function to create tracers from all players to the screen when the script runs
+    createTracersFromAllPlayers()
 end
 
--- Call the function to create tracers for all players when the script runs
-createTracersForAllPlayers()
+-- Call the function to create tracers to the screen
+createTracersToScreen()
 
     end
 })
