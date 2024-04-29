@@ -127,62 +127,41 @@ MainTab:AddToggle({
 	Name = "Tracers",
 	Default = false,
 	Callback = function(Value)
--- Function to create tracers from all players to your screen
-local function createTracersToScreen()
+-- Create a ScreenGui to hold the tracers
+local tracerGui = Instance.new("ScreenGui")
+tracerGui.Name = "Tracers"
+tracerGui.Parent = game:GetService("CoreGui")
+
+-- Function to create tracer lines from the bottom of the screen to players
+local function createTracers()
     -- Get the current camera
     local camera = game.Workspace.CurrentCamera
+    
+    -- Get all players in the game
+    local players = game:GetService("Players"):GetPlayers()
 
-    -- Function to create a tracer line from a player to the camera
-    local function createTracerFromPlayer(player)
-        -- Check if the player exists and is valid
-        if player and player.Character then
-            -- Get the player's character and position
-            local character = player.Character
-            local characterPosition = character.PrimaryPart.Position
+    -- Loop through each player and create a tracer line
+    for _, player in ipairs(players) do
+        -- Check if the player has a character and it's visible
+        if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+            -- Calculate the position of the player's character in screen space
+            local screenPosition = camera:WorldToViewportPoint(player.Character.HumanoidRootPart.Position)
 
-            -- Calculate the position on the screen
-            local screenPosition, onScreen = camera:WorldToScreenPoint(characterPosition)
-
-            -- Create the tracer line only if the player is on the screen
-            if onScreen then
-                local tracer = Drawing.new("Line")
-                tracer.Color = Color3.new(1, 0, 0) -- Red color
-                tracer.Thickness = 2
-                tracer.Transparency = 0.5
-                tracer.Visible = true
-                tracer.From = Vector2.new(screenPosition.X, screenPosition.Y)
-                tracer.Parent = Drawing
-
-                -- Update the tracer position continuously
-                game:GetService("RunService").RenderStepped:Connect(function()
-                    local newScreenPosition, newOnScreen = camera:WorldToScreenPoint(character.PrimaryPart.Position)
-                    if newOnScreen then
-                        tracer.From = Vector2.new(newScreenPosition.X, newScreenPosition.Y)
-                    else
-                        tracer.Visible = false
-                    end
-                end)
-            end
+            -- Create the tracer line
+            local tracer = Instance.new("Frame")
+            tracer.Name = "Tracer"
+            tracer.BackgroundColor3 = Color3.new(1, 0, 0)  -- Red color
+            tracer.BorderSizePixel = 0
+            tracer.Size = UDim2.new(0, 1, 0, camera.ViewportSize.Y - screenPosition.Y)
+            tracer.Position = UDim2.new(0, screenPosition.X * camera.ViewportSize.X, 0, screenPosition.Y * camera.ViewportSize.Y)
+            tracer.Parent = tracerGui
         end
     end
-
-    -- Function to create tracers from all players to the screen
-    local function createTracersFromAllPlayers()
-        -- Get all players in the game
-        local players = game:GetService("Players"):GetPlayers()
-
-        -- Loop through each player and create a tracer
-        for _, player in ipairs(players) do
-            createTracerFromPlayer(player)
-        end
-    end
-
-    -- Call the function to create tracers from all players to the screen when the script runs
-    createTracersFromAllPlayers()
 end
 
--- Call the function to create tracers to the screen
-createTracersToScreen()
+-- Call the function to create tracers when the script runs and every frame
+createTracers()
+game:GetService("RunService").RenderStepped:Connect(createTracers)
 
     end
 })
