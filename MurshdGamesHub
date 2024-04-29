@@ -61,64 +61,47 @@ MainTab:AddToggle({
 	Name = "Esp",
 	Default = false,
 	Callback = function(Value)
--- Function to create an outline effect for a player's body
+		-- Function to create an outline stroke for a player's body
 local function createOutline(player)
     -- Check if the player exists and is valid
     if player and player.Character then
-        -- Function to update the outline parts based on player's current position and size
-        local function updateOutline()
-            -- Check if the player's character still exists
-            if player.Character and player.Character.Parent then
-                -- Remove any existing outline parts
-                for _, existingOutline in ipairs(player.Character:GetChildren()) do
-                    if existingOutline.Name == "Outline" then
-                        existingOutline:Destroy()
-                    end
-                end
-
-                -- Create outline parts for each part of the player's character
-                for _, part in ipairs(player.Character:GetDescendants()) do
-                    if part:IsA("BasePart") then
-                        local outlinePart = Instance.new("Part")
-                        outlinePart.Name = "Outline"
-                        outlinePart.Size = part.Size + Vector3.new(0.1, 0.1, 0.1) -- Increase size slightly to create outline effect
-                        outlinePart.Position = part.Position
-                        outlinePart.Color = Color3.new(1, 0, 0) -- Red color for outline
-                        outlinePart.Transparency = 0.5 -- Adjust transparency as needed
-                        outlinePart.Anchored = true
-                        outlinePart.CanCollide = false
-                        outlinePart.Parent = part.Parent
-                    end
-                end
+        -- Create an outline part for each part of the player's character
+        for _, part in ipairs(player.Character:GetDescendants()) do
+            if part:IsA("BasePart") then
+                -- Create a copy of the part to serve as the outline stroke
+                local outlineStroke = part:Clone()
+                outlineStroke.Name = "OutlineStroke"
+                
+                -- Set the properties of the outline stroke
+                outlineStroke.Transparency = 0.5
+                outlineStroke.Color = Color3.new(1, 0, 0) -- Red color
+                outlineStroke.Material = Enum.Material.Neon
+                
+                -- Parent the outline stroke to the player's character
+                outlineStroke.Parent = player.Character
+                
+                -- Make the outline stroke slightly larger than the original part
+                local outlineOffset = Vector3.new(0.1, 0.1, 0.1) -- Adjust as needed
+                outlineStroke.Size = part.Size + outlineOffset
+                outlineStroke.Position = part.Position
             end
         end
-
-        -- Call the update function immediately to create the initial outline
-        updateOutline()
-
-        -- Connect a function to the character's child added event to update the outline when new parts are added
-        player.Character.ChildAdded:Connect(updateOutline)
     end
 end
 
--- Function to create outlines for all players in the game
-local function createOutlinesForAllPlayers()
+-- Function to create outline strokes for all players in the game
+local function createOutlineStrokesForAllPlayers()
     -- Get all players in the game
     local players = game:GetService("Players"):GetPlayers()
 
-    -- Loop through each player and create an outline effect
+    -- Loop through each player and create an outline stroke
     for _, player in ipairs(players) do
         createOutline(player)
     end
-
-    -- Connect a function to the player added event to create outlines for new players
-    game:GetService("Players").PlayerAdded:Connect(function(player)
-        createOutline(player)
-    end)
 end
 
--- Call the function to create outlines for all players when the script runs
-createOutlinesForAllPlayers()
+-- Call the function to create outline strokes for all players when the script runs
+createOutlineStrokesForAllPlayers()
 
     end
 })
@@ -127,41 +110,42 @@ MainTab:AddToggle({
 	Name = "Tracers",
 	Default = false,
 	Callback = function(Value)
--- Create a ScreenGui to hold the tracers
-local tracerGui = Instance.new("ScreenGui")
-tracerGui.Name = "Tracers"
-tracerGui.Parent = game:GetService("CoreGui")
+		-- Create a ScreenGui to hold the lines
+local lineGui = Instance.new("ScreenGui")
+lineGui.Name = "Lines"
+lineGui.Parent = game:GetService("CoreGui")
 
--- Function to create tracer lines from the bottom of the screen to players
-local function createTracers()
+-- Function to create lines from players' heads to the bottom of the screen
+local function createLines()
     -- Get the current camera
     local camera = game.Workspace.CurrentCamera
     
     -- Get all players in the game
     local players = game:GetService("Players"):GetPlayers()
 
-    -- Loop through each player and create a tracer line
+    -- Loop through each player and create a line
     for _, player in ipairs(players) do
         -- Check if the player has a character and it's visible
-        if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
-            -- Calculate the position of the player's character in screen space
-            local screenPosition = camera:WorldToViewportPoint(player.Character.HumanoidRootPart.Position)
+        if player.Character and player.Character:FindFirstChild("Head") then
+            -- Calculate the position of the player's head in screen space
+            local headPosition = player.Character.Head.Position
+            local screenPosition = camera:WorldToViewportPoint(headPosition)
 
-            -- Create the tracer line
-            local tracer = Instance.new("Frame")
-            tracer.Name = "Tracer"
-            tracer.BackgroundColor3 = Color3.new(1, 0, 0)  -- Red color
-            tracer.BorderSizePixel = 0
-            tracer.Size = UDim2.new(0, 1, 0, camera.ViewportSize.Y - screenPosition.Y)
-            tracer.Position = UDim2.new(0, screenPosition.X * camera.ViewportSize.X, 0, screenPosition.Y * camera.ViewportSize.Y)
-            tracer.Parent = tracerGui
+            -- Create the line
+            local line = Instance.new("Frame")
+            line.Name = "Line"
+            line.BackgroundColor3 = Color3.new(1, 1, 1)  -- White color
+            line.BorderSizePixel = 0
+            line.Size = UDim2.new(0, 1, 0, camera.ViewportSize.Y - screenPosition.Y)
+            line.Position = UDim2.new(0, screenPosition.X * camera.ViewportSize.X, 0, screenPosition.Y * camera.ViewportSize.Y)
+            line.Parent = lineGui
         end
     end
 end
 
--- Call the function to create tracers when the script runs and every frame
-createTracers()
-game:GetService("RunService").RenderStepped:Connect(createTracers)
+-- Call the function to create lines when the script runs and every frame
+createLines()
+game:GetService("RunService").RenderStepped:Connect(createLines)
 
     end
 })
