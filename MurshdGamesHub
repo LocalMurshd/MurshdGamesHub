@@ -120,62 +120,6 @@ MainTab:AddButton({
 	end    
 })
 
-
-MainTab:AddButton({
-	Name = "Esp modded",
-	Callback = function()
-		local FillColor = Color3.fromRGB(175,25,255)
-		local DepthMode = "AlwaysOnTop"
-		local FillTransparency = 0.5
-		local OutlineColor = Color3.fromRGB(255,255,255)
-		local OutlineTransparency = 0
-		
-		local CoreGui = game:FindService("CoreGui")
-		local Players = game:FindService("Players")
-		local lp = Players.LocalPlayer
-		local connections = {}
-		
-		local Storage = Instance.new("Folder")
-		Storage.Parent = CoreGui
-		Storage.Name = "Highlight_Storage"
-		
-		local function Highlight(plr)
-			local Highlight = Instance.new("Highlight")
-			Highlight.Name = plr.Name
-			Highlight.FillColor = FillColor
-			Highlight.DepthMode = DepthMode
-			Highlight.FillTransparency = FillTransparency
-			Highlight.OutlineColor = OutlineColor
-			Highlight.OutlineTransparency = 0
-			Highlight.Parent = Storage
-			
-			local plrchar = plr.Character
-			if plrchar then
-				Highlight.Adornee = plrchar
-			end
-		
-			connections[plr] = plr.CharacterAdded:Connect(function(char)
-				Highlight.Adornee = char
-			end)
-		end
-		
-		Players.PlayerAdded:Connect(Highlight)
-		for i,v in next, Players:GetPlayers() do
-			Highlight(v)
-		end
-		
-		Players.PlayerRemoving:Connect(function(plr)
-			local plrname = plr.Name
-			if Storage[plrname] then
-				Storage[plrname]:Destroy()
-			end
-			if connections[plr] then
-				connections[plr]:Disconnect()
-			end
-		end)
-	end
-})
-
 MainTab:AddButton({
 	Name = "Small server Joiner",
 	Description = "joins smallest server",
@@ -486,16 +430,6 @@ GamesSection:AddButton({
 end
 })
 
-
-
-GamesSection:AddButton({
-	Name = "FE Brookhaven Unlock All Gamepass Script",
-	Callback = function()
-		loadstring(game:HttpGet("https://raw.githubusercontent.com/Boid24/Brkhaven/main/Ghoulx"))()
-end
-})
-
-
 GamesSection:AddButton({
 	Name = "FE Brookhaven KIll all + more",
 	Callback = function()
@@ -606,10 +540,47 @@ local Section = GamesSection:AddSection({
 
 
 GamesSection:AddButton({
+	Name = "Murshd Games Mm2",
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/LocalMurshd/murshdgamesmm2/main/murshdgamesmm2"))()
+	end
+})
+
+
+GamesSection:AddButton({
+	Name = "Old Symphony Hub",
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/script-by/Nx-Crazy/main/Silent-Aim-MM2"))()
+	end
+})
+
+GamesSection:AddButton({
+	Name = "Old Symphony Hub",
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/ThatSick/ArrayField/main/OldSymphonyHub.lua"))()
+	end
+})
+
+GamesSection:AddButton({
+	Name = "yarhm Hub",
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/Joystickplays/psychic-octo-invention/main/yarhm.lua", false))()
+	end
+})
+
+
+GamesSection:AddButton({
+	Name = "Symphony Hub",
+	Callback = function()
+		loadstring(game:HttpGet('https://raw.githubusercontent.com/ThatSick/ArrayField/main/SymphonyHub.lua'))()
+	end
+})
+
+GamesSection:AddButton({
 	Name = "DreadzHub2",
 	Callback = function()
         loadstring(game:HttpGet("https://raw.githubusercontent.com/DreadzHub2/DreadzHub-Scripts-FR/main/Loader"))()
-end
+	end
 })
 
 
@@ -622,7 +593,12 @@ end
 
 
 
-
+GamesSection:AddButton({
+	Name = "Nexus",
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/s-o-a-b/nexus/main/loadstring"))()
+	end
+})
 
 GamesSection:AddButton({
 	Name = "Murder Mystery 2(Autofarm coins)",
@@ -630,9 +606,6 @@ GamesSection:AddButton({
 		loadstring(game:HttpGet('https://raw.githubusercontent.com/Unknownproootest/Unknown-MurderMystery2/main/FarmGui.lua'))()
 end
 })
-
-
-
 
 GamesSection:AddButton({
 	Name = "Technologies (ESP, Silent Aim)",
@@ -12192,3 +12165,5 @@ ST:AddButton({
 	end
 })
 -------------settings end---------------
+
+OrionLib:Init()
