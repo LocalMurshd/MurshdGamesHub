@@ -63,23 +63,6 @@ local Button = MainTab:CreateButton({
 local Players = game:GetService("Players")
 local player = Players.LocalPlayer
 
-
--- Assuming 'player' is defined somewhere in your script or accessible globally
-
-local Button = MainTab:CreateButton({
-    Name = "Reset Character",
-    Callback = function()
-        if player and player.Character then
-            -- Destroy the current character model
-            player.Character:Destroy()
-
-            -- Load a new character model
-            player:LoadCharacter()
-        end
-    end,
-})
-
-
 -- Function to set CanCollide for all character parts
 local function setCharacterCollide(canCollide)
     local character = player.Character or player.CharacterAdded:Wait()
