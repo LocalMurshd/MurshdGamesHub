@@ -1,11 +1,4 @@
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
-local Aimbot = loadstring(game:HttpGet("https://raw.githubusercontent.com/CITY512/modules/main/aimbot.lua"))()
-
-repeat task.wait() until game.Players.LocalPlayer -- Waits for LocalPlayer to load in.
-
-local LocalPlayer = Players.LocalPlayer
-local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
-local Mouse = LocalPlayer:GetMouse()
 
 local Window = Rayfield:CreateWindow({
    Name = "Murshd Murder Myster 2 Beta!",
@@ -116,3 +109,19 @@ local MurderSection = MurderTab:CreateSection("Murder Scripts")
 
 local sheriffTab = Window:CreateTab("🔫 Sheriff", nil) 
 local SheriffSection = sheriffTab:CreateSection("Sheriff Scripts")
+
+
+
+
+
+
+--[[
+
+local Aimbot = loadstring(game:HttpGet("https://raw.githubusercontent.com/CITY512/modules/main/aimbot.lua"))()
+
+repeat task.wait() until game.Players.LocalPlayer -- Waits for LocalPlayer to load in.
+
+local LocalPlayer = Players.LocalPlayer
+local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
+local Mouse = LocalPlayer:GetMouse()
+]]
