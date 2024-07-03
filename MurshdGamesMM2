@@ -127,11 +127,3 @@ local MurderSection = MurderTab:CreateSection("Murder Scripts")
 
 local sheriffTab = Window:CreateTab("🔫 Sheriff", nil) 
 local SheriffSection = sheriffTab:CreateSection("Sheriff Scripts")
-
-local Button = sheriffTab:CreateButton({
-    Name = "Aimbot",
-    Callback = function()
-        loadstring(game:HttpGet('https://raw.githubusercontent.com/CITY512/modules/main/aimbot.lua'))()
-    end,
- })
---sheriff tab end
