@@ -49,47 +49,6 @@ Rayfield:Notify({
 })
 
 
-local configs = { -- Library Configurations
-    GunAimbot = false;
-    KnifeAimbot = false;
-    GunPrediction = 150;
-    KnifePrediction = 100;
-    AimbotMethod = "Murderer/Target";
-    FOV = 350;
-    AutoEquip = true;
-    AutoShoot = true;
-    KillAura = false;
-    KillAuraRange = 15;
-    FaceTarget = false;
-
-    AutoRemoveLag = false;
-    IncludeAccessories = false;
-    IncludeLocalPlayer = false;
-    ToggleWalkSpeed = false;
-    ToggleJumpPower = false;
-    WalkSpeed = 16;
-    JumpPower = 50;
-
-    CoinFarm = false;
-    XPFarm = false;
-    AutoUnbox = false;
-    AutoUnboxCrate = {};
-
-    AutoGrabGun = false;
-    FlingPlayer = false;
-
-    Chams = false;
-    ShowGunDrop = false;
-    TrapESP = false;
-    MurdererColor = Color3.fromRGB(255, 112, 112);
-    TrapColor = Color3.fromRGB(255, 172, 112);
-    HeroColor = Color3.fromRGB(255, 231, 112);
-    InnocentColor = Color3.fromRGB(143, 255, 112);
-    SheriffColor = Color3.fromRGB(112, 136, 255);
-    GunDropColor = Color3.fromRGB(141, 112, 255);
-    ShowAimbotVisuals = false;
-}
-
  
 
 --local MiscTab = Window:CreateTab("✨ Misc", nil) 
