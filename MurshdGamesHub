@@ -542,7 +542,7 @@ local Section = GamesSection:AddSection({
 GamesSection:AddButton({
 	Name = "Murshd Games Mm2",
 	Callback = function()
-		loadstring(game:HttpGet("https://raw.githubusercontent.com/LocalMurshd/murshdgamesmm2/main/murshdgamesmm2"))()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/LocalMurshd/MurshdGamesHub/main/MurshdGamesMM2"))()
 	end
 })
 
